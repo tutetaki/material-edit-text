@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -12,42 +14,44 @@ import com.pombo.materialedittext.lib.R;
 
 public class MaterialEditText extends EditText {
 
-    private float dimen_1dp;
-    private float dimen_2dp;
-    private float dimen_8dp;
-    private float dimen_16dp;
+    private  float dimen_1dp;
+    private  float dimen_2dp;
+    private  float dimen_8dp;
+    private  float dimen_16dp;
 
-    private float dimen_12sp;
+    private  float dimen_12sp;
 
     private float lineHeight;
-    private Paint linePaint = new Paint();
-    private Path line = new Path();
+    private Path line;
+    private Paint linePaint;
 
-    private boolean hasError;
     private CharSequence errorText;
-    private Paint errorTextPaint = new Paint();
+    private boolean drawError;
+    private Paint errorTextPaint;
+
+    private boolean floatingLabel;
+    private boolean drawLabel;
+    private Paint labelTextPaint;
 
     public MaterialEditText(Context context) {
-        super(context);
-        init(context);
+        this(context, null);
     }
 
     public MaterialEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
     public MaterialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public MaterialEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs){
         Resources r = getResources();
         DisplayMetrics displayMetrics = r.getDisplayMetrics();
         dimen_1dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, displayMetrics);
@@ -57,50 +61,83 @@ public class MaterialEditText extends EditText {
 
         dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
 
-        setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp);
-        setIncludeFontPadding(false);
-        setBackground(null);
+        setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp); // Remove API padding
+        setIncludeFontPadding(false); // Remove text top/bottom padding)
+        setBackground(null);  // Remove API background
         setTextSize(16);
 
+        line = new Path();
+        linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(getCurrentHintTextColor());
         linePaint.setStrokeWidth(dimen_1dp);
         if (!isEnabled()) {
             linePaint.setPathEffect(new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0));
         }
+        errorTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        errorTextPaint.setColor(getContext().getResources().getColor(R.color.material_red));
+        errorTextPaint.setTextSize(dimen_12sp);
+
+        // 0btain XML attributes
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
+            floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
+        }
+
+        if (floatingLabel) {
+            appendPadding(0, (int) (dimen_8dp + dimen_12sp), 0, 0);
+
+            labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+            labelTextPaint.setColor(getCurrentHintTextColor());
+            labelTextPaint.setTextSize(dimen_12sp);
+        }
+
+        onTextChanged(getText(), 0, getText().length(), getText().length());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (!hasError) {
-            lineHeight = getHeight() - dimen_8dp;
-        } else {
+        if (drawError && !TextUtils.isEmpty(errorText)) {
             lineHeight = getHeight() - (2 * dimen_8dp + dimen_12sp);
             canvas.drawText(errorText, 0, errorText.length(), 0, getHeight() - dimen_8dp, errorTextPaint);
+        } else {
+            lineHeight = getHeight() - dimen_8dp;
         }
 
+        if (drawLabel && !TextUtils.isEmpty(getHint())) {
+            canvas.drawText(getHint(), 0, getHint().length(), 0, dimen_16dp + dimen_12sp, labelTextPaint);
+        }
+
+        line.reset();
         line.moveTo(0, lineHeight);
         line.lineTo(getWidth(), lineHeight);
-
         canvas.drawPath(line, linePaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isEnabled() && !hasError) {
+        if (isEnabled() && !drawError) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     linePaint.setColor(obtainColorPrimary(getContext()));
                     linePaint.setStrokeWidth(dimen_2dp);
+                    if (floatingLabel) {
+                        labelTextPaint.setColor(obtainColorPrimary(getContext()));
+                    }
                     invalidate();
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    linePaint.setColor(getCurrentHintTextColor());
-                    linePaint.setStrokeWidth(dimen_1dp);
-                    invalidate();
+                    if (!isFocused()) {
+                        linePaint.setColor(getCurrentHintTextColor());
+                        linePaint.setStrokeWidth(dimen_1dp);
+                        if (floatingLabel) {
+                            labelTextPaint.setColor(getCurrentHintTextColor());
+                        }
+                        invalidate();
+                    }
                     break;
             }
         }
@@ -109,7 +146,7 @@ public class MaterialEditText extends EditText {
 
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        if (!hasError) {
+        if (!drawError) {
             if (focused) {
                 linePaint.setColor(obtainColorPrimary(getContext()));
                 linePaint.setStrokeWidth(dimen_2dp);
@@ -118,45 +155,69 @@ public class MaterialEditText extends EditText {
                 linePaint.setStrokeWidth(dimen_1dp);
             }
         }
+        if (floatingLabel) {
+            if (focused) {
+                labelTextPaint.setColor(obtainColorPrimary(getContext()));
+            } else {
+                labelTextPaint.setColor(getCurrentHintTextColor());
+            }
+        }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
     }
 
     @Override
     public void setError(CharSequence error) {
         if (error == null) {
-            hasError = false;
+            drawError = false;
             errorText = null;
-            setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), (int) (getPaddingBottom() - (dimen_8dp + dimen_12sp)));
+            appendPadding(0, 0, 0, (int) -(dimen_8dp + dimen_12sp));
 
         } else {
-            hasError = true;
+            drawError = true;
             errorText = error;
-            setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), (int) (getPaddingBottom() + (dimen_8dp + dimen_12sp)));
+            appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
 
             linePaint.setColor(getContext().getResources().getColor(R.color.material_red));
             linePaint.setStrokeWidth(dimen_2dp);
-            errorTextPaint.setColor(getContext().getResources().getColor(R.color.material_red));
-            errorTextPaint.setTextSize(dimen_12sp);
         }
         invalidate();
     }
 
     @Override
     public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
         if (linePaint == null) {
-            linePaint = new Paint();
+            linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         }
-
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(getCurrentHintTextColor());
         linePaint.setStrokeWidth(dimen_1dp);
-
         if (enabled) {
             linePaint.setPathEffect(null);
         } else {
             linePaint.setPathEffect(new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0));
         }
-        super.setEnabled(enabled);
+
+        if (labelTextPaint== null) {
+            labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        }
+        labelTextPaint.setColor(getCurrentHintTextColor());
+        labelTextPaint.setTextSize(dimen_12sp);
+    }
+
+    @Override
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        if (floatingLabel) {
+            if (lengthAfter > 0 || start > 0) {
+                drawLabel = true;
+            } else {
+                drawLabel = false;
+            }
+        }
+    }
+
+    private void appendPadding(int left, int top, int right, int bottom) {
+        setPadding(getPaddingLeft() + left, getPaddingTop() + top, getPaddingRight() + right, getPaddingBottom() + bottom);
     }
 
     private int obtainColorPrimary(Context context) {

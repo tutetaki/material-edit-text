@@ -1,0 +1,235 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="API"/>
+
+            <EditText
+                android:id="@+id/edt_api"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:text="Input text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_hint_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Normal with hint text"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_hint_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:hint="Hint text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/press"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Press"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_press"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Hint text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/focus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Focus"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_focus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Input tex"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Normal with input text"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_input_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Input text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Error"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_error"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Input text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/disabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Disabled"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_disabled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:enabled="false"
+                android:text="Input text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_hint_text_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Normal with hint text/label"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_hint_text_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Label text"
+                app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/focus_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Focus"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_focus_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Label text"
+                android:text="Input tex"
+                app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_input_text_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Normal with input text/label"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_input_text_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Label text"
+                android:text="Input text"
+                app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/disabled_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Disabled"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_disabled_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:enabled="false"
+                android:hint="Label text"
+                android:text="Input text"
+                app:floatingLabel="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

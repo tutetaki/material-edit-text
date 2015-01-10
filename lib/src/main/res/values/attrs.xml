@@ -2,6 +2,7 @@
 <resources>
 
     <declare-styleable name="materialEditText">
+        <attr name="floatingLabel" format="boolean"/>
     </declare-styleable>
 
     <attr name="materialEditTextStyle" format="reference"/>
