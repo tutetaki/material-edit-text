@@ -1,0 +1,50 @@
+# Local configuration file (sdk path, etc) #
+############################################
+project.properties
+local.properties
+
+# Built application files #
+###########################
+*.apk
+*.ap_
+
+# Generated files #
+###################
+bin/
+gen/
+build/
+
+# Eclipse project files #
+#########################
+.classpath
+.project
+.settings/
+proguard/
+
+# Intellij project files #
+##########################
+*.iml
+*.eml
+*.ipr
+*.iws
+*.userlibraries
+.idea/
+.gradle/
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db

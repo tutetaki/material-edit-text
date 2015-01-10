@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="material_red">@color/material_red_500</color>
+    <color name="material_red_500">#f44336</color>
+
+</resources>

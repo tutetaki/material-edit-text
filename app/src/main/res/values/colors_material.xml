@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="material_light_blue">@color/material_light_blue_500</color>
+    <color name="material_light_blue_500">#03a9f4</color>
+    <color name="material_light_blue_700">#0288d1</color>
+
+    <color name="material_purple">@color/material_purple_500</color>
+    <color name="material_purple_500">#9c27b0</color>
+
+</resources>
