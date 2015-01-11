@@ -2,7 +2,14 @@
 <resources>
 
     <declare-styleable name="materialEditText">
+        <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
+
+        <attr name="fullWidth" format="boolean"/>
+        <!-- Min characters count limit. 0 means no limit. -->
+        <attr name="minCharacters" format="integer"/>
+        <!-- max Characters count limit. 0 means no limit. -->
+        <attr name="maxCharacters" format="integer"/>
     </declare-styleable>
 
     <attr name="materialEditTextStyle" format="reference"/>

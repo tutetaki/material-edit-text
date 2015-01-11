@@ -14,24 +14,37 @@ import com.pombo.materialedittext.lib.R;
 
 public class MaterialEditText extends EditText {
 
-    private  float dimen_1dp;
-    private  float dimen_2dp;
-    private  float dimen_8dp;
-    private  float dimen_16dp;
+    private float dimen_1dp;
+    private float dimen_2dp;
+    private float dimen_8dp;
+    private float dimen_16dp;
+    private float dimen_20dp;
+    private float dimen_12sp;
 
-    private  float dimen_12sp;
-
+    private DashPathEffect pathEffect;
+    private float lineThickness;
     private float lineHeight;
-    private Path line;
+    private int lineColor;
     private Paint linePaint;
+    private Path line;
 
     private CharSequence errorText;
     private boolean drawError;
-    private Paint errorTextPaint;
+    private int errorTextColor;
+    private TextPaint errorTextPaint;
 
     private boolean floatingLabel;
     private boolean drawLabel;
-    private Paint labelTextPaint;
+    private int labelTextColor;
+    private TextPaint labelTextPaint;
+
+    private int charCount;
+    private int maxCharCount;
+    private boolean drawCharCounter;
+    private int charCountTextColor;
+    private TextPaint charCountTextPaint;
+
+//    private boolean fullWidth;
 
     public MaterialEditText(Context context) {
         this(context, null);
@@ -58,41 +71,50 @@ public class MaterialEditText extends EditText {
         dimen_2dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, displayMetrics);
         dimen_8dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, displayMetrics);
         dimen_16dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, displayMetrics);
-
+        dimen_20dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, displayMetrics);
         dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
 
-        setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp); // Remove API padding
-        setIncludeFontPadding(false); // Remove text top/bottom padding)
-        setBackground(null);  // Remove API background
-        setTextSize(16);
+        lineColor = getCurrentHintTextColor();
+        errorTextColor = getCurrentHintTextColor();
+        labelTextColor = getCurrentHintTextColor();
 
-        line = new Path();
-        linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setColor(getCurrentHintTextColor());
-        linePaint.setStrokeWidth(dimen_1dp);
         if (!isEnabled()) {
-            linePaint.setPathEffect(new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0));
+            pathEffect = new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0);
+            lineColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
+            labelTextColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
         }
+        lineThickness = dimen_1dp;
+        linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        line = new Path();
         errorTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        errorTextPaint.setColor(getContext().getResources().getColor(R.color.material_red));
-        errorTextPaint.setTextSize(dimen_12sp);
 
         // 0btain XML attributes
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
             floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
+            maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
+//            fullWidth = ta.getBoolean(R.styleable.materialEditText_fullWidth, false);
         }
 
+        // Override API padding
+//        if (fullWidth) {
+//            setPadding((int) dimen_16dp, (int) dimen_20dp, (int) dimen_16dp, (int) dimen_20dp);
+//        } else {
+        setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp);
+        if (maxCharCount > 0) {
+            appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
+            charCountTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        }
         if (floatingLabel) {
             appendPadding(0, (int) (dimen_8dp + dimen_12sp), 0, 0);
-
             labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-            labelTextPaint.setColor(getCurrentHintTextColor());
-            labelTextPaint.setTextSize(dimen_12sp);
         }
+//        }
+        setIncludeFontPadding(false); // Remove text top/bottom padding)
+        setBackground(null);  // Remove API background
+        setTextSize(16);
 
-        onTextChanged(getText(), 0, getText().length(), getText().length());
+        onTextChanged(getText(), 0, getText().length(), getText().length()); // Refresh label visibility
     }
 
     @Override
@@ -101,43 +123,64 @@ public class MaterialEditText extends EditText {
 
         if (drawError && !TextUtils.isEmpty(errorText)) {
             lineHeight = getHeight() - (2 * dimen_8dp + dimen_12sp);
-            canvas.drawText(errorText, 0, errorText.length(), 0, getHeight() - dimen_8dp, errorTextPaint);
+            errorTextPaint.setColor(errorTextColor);
+            errorTextPaint.setTextSize(dimen_12sp);
+            canvas.drawText(errorText, 0, errorText.length(), getScrollX(), getHeight() - dimen_8dp, errorTextPaint);
+        } else if (maxCharCount > 0) {
+            lineHeight = getHeight() - (2 * dimen_8dp + dimen_12sp);
+            if (drawCharCounter) {
+                charCountTextPaint.setColor(charCountTextColor);
+                charCountTextPaint.setTextSize(dimen_12sp);
+                charCountTextPaint.setTextAlign(Paint.Align.RIGHT);
+                String text = charCount + " / " + maxCharCount;
+                canvas.drawText(text, 0, text.length(), getScrollX() + getWidth(), getHeight() - dimen_8dp, charCountTextPaint);
+            }
         } else {
             lineHeight = getHeight() - dimen_8dp;
         }
-
         if (drawLabel && !TextUtils.isEmpty(getHint())) {
-            canvas.drawText(getHint(), 0, getHint().length(), 0, dimen_16dp + dimen_12sp, labelTextPaint);
+            labelTextPaint.setColor(labelTextColor);
+            labelTextPaint.setTextSize(dimen_12sp);
+            canvas.drawText(getHint(), 0, getHint().length(), getScrollX(), dimen_16dp + dimen_12sp, labelTextPaint);
         }
 
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setColor(lineColor);
+        linePaint.setStrokeWidth(lineThickness);
+        linePaint.setPathEffect(pathEffect);
         line.reset();
-        line.moveTo(0, lineHeight);
-        line.lineTo(getWidth(), lineHeight);
+        line.moveTo(getScrollX(), lineHeight);
+        line.lineTo(getScrollX() + getWidth(), lineHeight);
         canvas.drawPath(line, linePaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isEnabled() && !drawError) {
+        if (isEnabled()) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    linePaint.setColor(obtainColorPrimary(getContext()));
-                    linePaint.setStrokeWidth(dimen_2dp);
-                    if (floatingLabel) {
-                        labelTextPaint.setColor(obtainColorPrimary(getContext()));
-                    }
+                    lineColor = obtainColorPrimary(getContext());
+                    labelTextColor = obtainColorPrimary(getContext());
+                    lineThickness = dimen_2dp;
                     invalidate();
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    if (!isFocused()) {
-                        linePaint.setColor(getCurrentHintTextColor());
-                        linePaint.setStrokeWidth(dimen_1dp);
-                        if (floatingLabel) {
-                            labelTextPaint.setColor(getCurrentHintTextColor());
+                    if (isFocused()) {
+                        if (drawError || (drawCharCounter && charCount > maxCharCount)) {
+                            lineColor = getContext().getResources().getColor(R.color.material_red);
                         }
-                        invalidate();
+                    } else {
+                        if (drawError ) {
+                            lineColor = getContext().getResources().getColor(R.color.material_red);
+                            lineThickness = dimen_2dp;
+                        } else {
+                            lineColor = getCurrentHintTextColor();
+                            lineThickness = dimen_1dp;
+                        }
+                        labelTextColor = getCurrentHintTextColor();
                     }
+                    invalidate();
                     break;
             }
         }
@@ -146,20 +189,26 @@ public class MaterialEditText extends EditText {
 
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        if (!drawError) {
+        if (maxCharCount > 0) {
             if (focused) {
-                linePaint.setColor(obtainColorPrimary(getContext()));
-                linePaint.setStrokeWidth(dimen_2dp);
+                drawCharCounter = true;
             } else {
-                linePaint.setColor(getCurrentHintTextColor());
-                linePaint.setStrokeWidth(dimen_1dp);
+                drawCharCounter = false;
             }
         }
-        if (floatingLabel) {
+        if (!drawError) {
             if (focused) {
-                labelTextPaint.setColor(obtainColorPrimary(getContext()));
+                if (drawCharCounter && charCount > maxCharCount) {
+                    lineColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    lineColor = obtainColorPrimary(getContext());
+                }
+                labelTextColor = obtainColorPrimary(getContext());
+                lineThickness = dimen_2dp;
             } else {
-                labelTextPaint.setColor(getCurrentHintTextColor());
+                lineColor = getCurrentHintTextColor();
+                labelTextColor = getCurrentHintTextColor();
+                lineThickness = dimen_1dp;
             }
         }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
@@ -167,51 +216,54 @@ public class MaterialEditText extends EditText {
 
     @Override
     public void setError(CharSequence error) {
-        if (error == null) {
-            drawError = false;
-            errorText = null;
-            appendPadding(0, 0, 0, (int) -(dimen_8dp + dimen_12sp));
-
-        } else {
-            drawError = true;
+        if (error != null) {
             errorText = error;
+            drawError = true;
             appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
-
-            linePaint.setColor(getContext().getResources().getColor(R.color.material_red));
-            linePaint.setStrokeWidth(dimen_2dp);
+            lineColor = getContext().getResources().getColor(R.color.material_red);
+            errorTextColor = getContext().getResources().getColor(R.color.material_red);
+            lineThickness = dimen_2dp;
+        } else {
+            errorText = null;
+            drawError = false;
+            appendPadding(0, 0, 0, (int) -(dimen_8dp + dimen_12sp));
         }
-        invalidate();
     }
 
     @Override
     public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        if (linePaint == null) {
-            linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        }
-        linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setColor(getCurrentHintTextColor());
-        linePaint.setStrokeWidth(dimen_1dp);
         if (enabled) {
-            linePaint.setPathEffect(null);
+            pathEffect = null;
+//            currentColor = getCurrentHintTextColor();
         } else {
-            linePaint.setPathEffect(new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0));
+            pathEffect = new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0);
+//            currentColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
         }
-
-        if (labelTextPaint== null) {
-            labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        }
-        labelTextPaint.setColor(getCurrentHintTextColor());
-        labelTextPaint.setTextSize(dimen_12sp);
+        super.setEnabled(enabled);
     }
 
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         if (floatingLabel) {
-            if (lengthAfter > 0 || start > 0) {
+            if (text.length() > 0) {
                 drawLabel = true;
             } else {
                 drawLabel = false;
+            }
+        }
+        if (maxCharCount > 0) {
+            charCount = text.length();
+            if (drawCharCounter) {
+                if (charCount > maxCharCount) {
+                    lineColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    lineColor = obtainColorPrimary(getContext());
+                }
+            }
+            if (charCount > maxCharCount) {
+                charCountTextColor = getContext().getResources().getColor(R.color.material_red);
+            } else {
+                charCountTextColor = getCurrentHintTextColor();
             }
         }
     }

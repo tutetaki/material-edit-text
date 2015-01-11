@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Material Design Icons 1.0.1 : https://github.com/google/material-design-icons -->
+
+<resources>
+
+    <drawable name="communication_ic_phone">@drawable/ic_phone_white_24dp</drawable>
+
+</resources>

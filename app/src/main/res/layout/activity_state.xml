@@ -19,6 +19,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="API"/>
 
@@ -28,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:editable="false"
+                android:singleLine="true"
                 android:text="Input text"/>
         </LinearLayout>
 
@@ -39,6 +41,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Normal with hint text"/>
 
@@ -48,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:editable="false"
-                android:hint="Hint text"/>
+                android:hint="Hint text"
+                android:singleLine="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -59,6 +63,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Press"/>
 
@@ -67,7 +72,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:hint="Hint text"/>
+                android:editable="false"
+                android:hint="Hint text"
+                android:singleLine="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -78,6 +85,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Focus"/>
 
@@ -86,6 +94,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:hint="Hint text"
+                android:singleLine="true"
                 android:text="Input tex"/>
         </LinearLayout>
 
@@ -97,6 +107,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Normal with input text"/>
 
@@ -105,6 +116,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:editable="false"
+                android:singleLine="true"
                 android:text="Input text"/>
         </LinearLayout>
 
@@ -116,6 +129,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Error"/>
 
@@ -124,6 +138,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:editable="false"
+                android:singleLine="true"
                 android:text="Input text"/>
         </LinearLayout>
 
@@ -135,6 +151,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Disabled"/>
 
@@ -143,8 +160,116 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:editable="false"
                 android:enabled="false"
+                android:singleLine="true"
                 android:text="Input text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_hint_text_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Normal with hint text"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/communication_ic_phone"/>
+
+                <MaterialEditText
+                    android:id="@+id/medt_normal_with_hint_text_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:hint="Phone"
+                    android:singleLine="true"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/focus_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Focus"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/communication_ic_phone"/>
+
+                <MaterialEditText
+                    android:id="@+id/medt_focus_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone"
+                    android:singleLine="true"
+                    android:text="650"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_input_text_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Normal with input text"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/communication_ic_phone"/>
+
+                <MaterialEditText
+                    android:id="@+id/medt_normal_with_input_text_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:hint="Phone"
+                    android:singleLine="true"
+                    android:text="650-555-1234"/>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -155,6 +280,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Normal with hint text/label"/>
 
@@ -163,7 +289,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:editable="false"
                 android:hint="Label text"
+                android:singleLine="true"
                 app:floatingLabel="true"/>
         </LinearLayout>
 
@@ -175,6 +303,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Focus"/>
 
@@ -184,6 +313,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Label text"
+                android:singleLine="true"
                 android:text="Input tex"
                 app:floatingLabel="true"/>
         </LinearLayout>
@@ -196,6 +326,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Normal with input text/label"/>
 
@@ -204,7 +335,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:editable="false"
                 android:hint="Label text"
+                android:singleLine="true"
                 android:text="Input text"
                 app:floatingLabel="true"/>
         </LinearLayout>
@@ -217,6 +350,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:layout_weight="2"
                 android:text="Disabled"/>
 
@@ -225,10 +359,197 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:editable="false"
                 android:enabled="false"
                 android:hint="Label text"
+                android:singleLine="true"
                 android:text="Input text"
                 app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_hint_text_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Normal with hint text"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_hint_text_multi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:hint="Hint text"
+                app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/focus_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Focus"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_focus_multi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Hint text"
+                android:text="Input tex"
+                app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_input_text_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Normal with multi-line input text/label"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_input_text_multi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:hint="Label text"
+                android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/normal_with_input_text_label_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Normal with multi-line input text/label"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_normal_with_input_text_label_multi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:hint="Label text"
+                android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."
+                app:floatingLabel="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/character_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Single Line Focus"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_character_counter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Single Line Input Label"
+                android:singleLine="true"
+                android:text="Input text for a single line field with a max"
+                app:floatingLabel="true"
+                app:maxCharacters="50"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/character_counter_exceeding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Single Line Focus with Exceeding Max Characters"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_character_counter_exceeding"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:hint="Single Line Input Label"
+                android:singleLine="true"
+                android:text="Input text for a single line field with a maximum characters."
+                app:floatingLabel="true"
+                app:maxCharacters="50"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/character_counter_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Multi-Line Focus"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_character_counter_multi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="Multi-Line Input Label"
+                android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delic"
+                app:floatingLabel="true"
+                app:maxCharacters="120"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/character_counter_exceeding_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="2"
+                android:text="Multi-Line Focus with Exceeding Max Characters"/>
+
+            <MaterialEditText
+                android:id="@+id/medt_character_counter_exceeding_multi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:editable="false"
+                android:hint="Multi-Line Input Label"
+                android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delicata an ius."
+                app:floatingLabel="true"
+                app:maxCharacters="120"/>
         </LinearLayout>
     </LinearLayout>
 
