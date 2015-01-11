@@ -1,5 +1,7 @@
 package android.widget;
 
+import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -10,6 +12,8 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import com.pombo.materialedittext.lib.R;
 
 public class MaterialEditText extends EditText {
@@ -26,11 +30,15 @@ public class MaterialEditText extends EditText {
     private int highlightColor;
 
     private DashPathEffect lineEffect;
-    private float lineWidth;
     private float lineHeight;
     private float lineThickness;
     private Paint linePaint;
+    private Paint defaultLinePaint;
     private Path line;
+    private Path defaultLine;
+    private AnimatorSet lineAnimation;
+    private float xA;
+    private float xB;
 
     private CharSequence errorText;
     private TextPaint errorTextPaint;
@@ -68,6 +76,14 @@ public class MaterialEditText extends EditText {
         dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
         dimen_16sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, displayMetrics);
 
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                xA = 0;
+                xB = getWidth();
+            }
+        });
+
         highlightColor = getCurrentHintTextColor();
 
         if (!isEnabled()) {
@@ -76,7 +92,9 @@ public class MaterialEditText extends EditText {
         }
         lineThickness = dimen_1dp;
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        defaultLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         line = new Path();
+        defaultLine = new Path();
         errorTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
         // 0btain XML attributes
@@ -117,13 +135,28 @@ public class MaterialEditText extends EditText {
             lineHeight = getHeight() - dimen_8dp;
         }
 
+        // Draw the unselected line
+        defaultLinePaint.setStyle(Paint.Style.STROKE);
+        if (TextUtils.isEmpty(getError())) {
+            defaultLinePaint.setColor(getCurrentHintTextColor());
+        } else {
+            defaultLinePaint.setColor(highlightColor);
+        }
+        defaultLinePaint.setStrokeWidth(dimen_1dp);
+        defaultLinePaint.setPathEffect(lineEffect);
+        defaultLine.reset();
+        defaultLine.moveTo(getScrollX(), lineHeight);
+        defaultLine.lineTo(getScrollX() + getWidth(), lineHeight);
+        canvas.drawPath(defaultLine, defaultLinePaint);
+
+        // Draw the highlighted line
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(highlightColor);
         linePaint.setStrokeWidth(lineThickness);
         linePaint.setPathEffect(lineEffect);
         line.reset();
-        line.moveTo(getScrollX(), lineHeight);
-        line.lineTo(getScrollX() + getWidth(), lineHeight);
+        line.moveTo(getScrollX() + xA, lineHeight);
+        line.lineTo(getScrollX() + xB, lineHeight);
         canvas.drawPath(line, linePaint);
     }
 
@@ -136,7 +169,11 @@ public class MaterialEditText extends EditText {
                         highlightColor = obtainColorPrimary(getContext());
                     }
                     lineThickness = dimen_2dp;
-                    invalidate();
+                    if (!isFocused()) {
+                        float x = event.getX();
+                        lineAnimation = createLineAnimation(x, x, 0, getWidth());
+                        lineAnimation.start();
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
@@ -213,5 +250,29 @@ public class MaterialEditText extends EditText {
         int color = a.getColor(0, 0);
         a.recycle();
         return color;
+    }
+
+    private AnimatorSet createLineAnimation(float startA, float startB, float targetA, float targetB) {
+        ValueAnimator offsetAnim = ValueAnimator.ofFloat(startB, targetB);
+        offsetAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                xA = (Float) animation.getAnimatedValue();
+            }
+        });
+        ValueAnimator widthAnim = ValueAnimator.ofFloat(startA, targetA);
+        widthAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                xB = (Float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(200);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.playTogether(offsetAnim, widthAnim );
+        return set;
     }
 }
