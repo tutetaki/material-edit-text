@@ -1,8 +1,11 @@
 package android.widget;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
@@ -28,6 +31,7 @@ public class MaterialEditText extends EditText {
     private float dimen_16sp;
 
     private int highlightColor;
+    private int hintColor;
 
     private DashPathEffect lineEffect;
     private float lineHeight;
@@ -43,8 +47,15 @@ public class MaterialEditText extends EditText {
     private CharSequence errorText;
     private TextPaint errorTextPaint;
 
+    private CharSequence labelText;
     private boolean floatingLabel;
     private TextPaint labelTextPaint;
+    private AnimatorSet labelAnimation;
+    private float labelX;
+    private float labelY;
+    private int labelTextColor;
+    private float labelTextSize;
+    private long labelDurationOffset;
 
     public MaterialEditText(Context context) {
         this(context, null);
@@ -79,16 +90,26 @@ public class MaterialEditText extends EditText {
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 xA = 0;
                 xB = getWidth();
+
+                if (getText().length() > 0) {
+                    labelX = getScrollX();
+                    labelY = dimen_16dp + dimen_12sp;
+                    labelTextColor = hintColor;
+                    labelTextSize = dimen_12sp;
+                }
             }
         });
 
-        highlightColor = getCurrentHintTextColor();
+        highlightColor = Color.TRANSPARENT;
+        hintColor = getCurrentHintTextColor();
 
         if (!isEnabled()) {
             lineEffect = new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0);
             highlightColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
+            hintColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
         }
         lineThickness = dimen_1dp;
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -121,9 +142,9 @@ public class MaterialEditText extends EditText {
         super.onDraw(canvas);
 
         if (floatingLabel && !TextUtils.isEmpty(getHint())) {
-            labelTextPaint.setColor(highlightColor);
-            labelTextPaint.setTextSize(dimen_12sp);
-            canvas.drawText(getHint(), 0, getHint().length(), getScrollX(), dimen_16dp + dimen_12sp, labelTextPaint);
+            labelTextPaint.setColor(labelTextColor);
+            labelTextPaint.setTextSize(labelTextSize);
+            canvas.drawText(getHint(), 0, getHint().length(), getScrollX() + labelX, labelY, labelTextPaint);
         }
 
         if (!TextUtils.isEmpty(getError())) {
@@ -138,7 +159,7 @@ public class MaterialEditText extends EditText {
         // Draw the unselected line
         defaultLinePaint.setStyle(Paint.Style.STROKE);
         if (TextUtils.isEmpty(getError())) {
-            defaultLinePaint.setColor(getCurrentHintTextColor());
+            defaultLinePaint.setColor(hintColor);
         } else {
             defaultLinePaint.setColor(highlightColor);
         }
@@ -167,6 +188,9 @@ public class MaterialEditText extends EditText {
                 case MotionEvent.ACTION_DOWN:
                     if (TextUtils.isEmpty(getError())) {
                         highlightColor = obtainColorPrimary(getContext());
+                        if (labelY != getBaseline()) {
+                            labelTextColor = obtainColorPrimary(getContext());
+                        }
                     }
                     lineThickness = dimen_2dp;
                     if (!isFocused()) {
@@ -179,7 +203,8 @@ public class MaterialEditText extends EditText {
                 case MotionEvent.ACTION_CANCEL:
                     if (!isFocused()) {
                         if (TextUtils.isEmpty(getError())) {
-                            highlightColor = getCurrentHintTextColor();
+                            highlightColor = Color.TRANSPARENT;
+                            labelTextColor = hintColor;
                         }
                         lineThickness = dimen_1dp;
                         invalidate();
@@ -197,11 +222,29 @@ public class MaterialEditText extends EditText {
                 highlightColor = obtainColorPrimary(getContext());
             }
             lineThickness = dimen_2dp;
+            if (floatingLabel && getText().length() == 0) {
+                labelAnimation = createFloationgLabelAnimation(getScrollX(), getBaseline(), getScrollX(), dimen_16dp + dimen_12sp, dimen_16sp, dimen_12sp, hintColor, highlightColor, 0);
+                labelAnimation.start();
+            } else {
+                labelTextColor = highlightColor;
+            }
         } else {
             if (TextUtils.isEmpty(getError())) {
-                highlightColor = getCurrentHintTextColor();
+                highlightColor = Color.TRANSPARENT;
             }
             lineThickness = dimen_1dp;
+            if (floatingLabel && getText().length() == 0) {
+                if (labelAnimation != null) {
+                    labelAnimation.cancel();
+                    labelAnimation = createFloationgLabelAnimation(labelX, labelY, getScrollX(), getBaseline(), labelTextSize, dimen_16sp, labelTextColor, hintColor, labelDurationOffset);
+                    labelAnimation.start();
+                } else {
+                    labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, dimen_16sp, highlightColor, hintColor, 0);
+                    labelAnimation.start();
+                }
+            } else {
+                labelTextColor = hintColor;
+            }
         }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
     }
@@ -221,6 +264,7 @@ public class MaterialEditText extends EditText {
     public CharSequence getError() {
         return errorText;
     }
+
 
     @Override
     public void setEnabled(boolean enabled) {
@@ -273,6 +317,65 @@ public class MaterialEditText extends EditText {
         set.setDuration(200);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(offsetAnim, widthAnim );
+        return set;
+    }
+
+    private AnimatorSet createFloationgLabelAnimation(float startX, float startY, float targetX, float targetY, float startTextSize, float targetTextSize, int startColor, int targetColor, long durationOffset) {
+        ValueAnimator xAnim = ValueAnimator.ofFloat(startX, targetX);
+        xAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                labelX = (Float) animation.getAnimatedValue();
+            }
+        });
+        ValueAnimator yAnim = ValueAnimator.ofFloat(startY, targetY);
+        yAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                labelY = (Float) animation.getAnimatedValue();
+            }
+        });
+        ValueAnimator textSizeAnim = ValueAnimator.ofFloat(startTextSize, targetTextSize);
+        textSizeAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                labelTextSize = (Float) animation.getAnimatedValue();
+                labelDurationOffset = animation.getCurrentPlayTime();
+            }
+        });
+        ValueAnimator textColorAnim = ValueAnimator.ofInt(startColor, targetColor);
+        textColorAnim.setEvaluator(new ArgbEvaluator());
+        textColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                labelTextColor = (Integer) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(Math.max(0, 200 - durationOffset)); // Assure positive duration
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.playTogether(xAnim, yAnim, textSizeAnim, textColorAnim);
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                setHintTextColor(Color.TRANSPARENT);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                labelDurationOffset = 0;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
         return set;
     }
 }
