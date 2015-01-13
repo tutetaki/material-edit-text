@@ -198,7 +198,8 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:hint="Phone"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    material:withIcon="@+id/img_1"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -234,7 +235,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Phone"
                     android:singleLine="true"
-                    android:text="650"/>
+                    android:text="650"
+                    material:withIcon="@+id/img_2"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -271,7 +273,8 @@
                     android:editable="false"
                     android:hint="Phone"
                     android:singleLine="true"
-                    android:text="650-555-1234"/>
+                    android:text="650-555-1234"
+                    material:withIcon="@+id/img_3"/>
             </LinearLayout>
         </LinearLayout>
 

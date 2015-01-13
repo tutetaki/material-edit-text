@@ -4,10 +4,12 @@
     <declare-styleable name="materialEditText">
         <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
-
-        <attr name="fullWidth" format="boolean"/>
         <!-- Max Characters count limit. 0 means no limit. -->
         <attr name="maxCharacters" format="integer"/>
+        <!-- Icon (ImageView) associated to this EditText. -->
+        <attr name="withIcon" format="reference"/>
+
+        <attr name="fullWidth" format="boolean"/>
     </declare-styleable>
 
 </resources>

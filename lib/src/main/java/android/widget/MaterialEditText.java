@@ -15,20 +15,15 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import com.pombo.materialedittext.lib.R;
 
 public class MaterialEditText extends EditText {
 
-    private float dimen_1dp;
-    private float dimen_2dp;
-    private float dimen_8dp;
-    private float dimen_16dp;
-    private float dimen_20dp;
-    private float dimen_2sp;
-    private float dimen_12sp;
-    private float dimen_16sp;
+    private float dimen_1dp, dimen_2dp, dimen_8dp, dimen_16dp, dimen_20dp;
+    private float dimen_12sp, dimen_16sp;
 
     private int highlightColor;
     private int hintColor;
@@ -62,6 +57,8 @@ public class MaterialEditText extends EditText {
     private int charCountTextColor;
     private TextPaint charCountTextPaint;
 
+    private int iconResId;
+
     public MaterialEditText(Context context) {
         this(context, null);
     }
@@ -88,7 +85,6 @@ public class MaterialEditText extends EditText {
         dimen_8dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, displayMetrics);
         dimen_16dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, displayMetrics);
         dimen_20dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, displayMetrics);
-        dimen_2sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 2, displayMetrics);
         dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
         dimen_16sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, displayMetrics);
 
@@ -129,6 +125,7 @@ public class MaterialEditText extends EditText {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
             floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
             maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
+            iconResId = ta.getResourceId(R.styleable.materialEditText_withIcon, 0);
         }
 
         // Override API padding
@@ -267,6 +264,12 @@ public class MaterialEditText extends EditText {
                     charCountTextColor = hintColor;
                 }
             }
+            if (iconResId > 0) {
+                View view = getRootView().findViewById(iconResId);
+                if (ImageView.class.isInstance(view)) {
+                    ((ImageView)view).setColorFilter(highlightColor);
+                }
+            }
         } else {
             if (TextUtils.isEmpty(getError())) {
                 if (maxCharCount > 0 && charCount > maxCharCount) {
@@ -294,6 +297,12 @@ public class MaterialEditText extends EditText {
             }
             if (maxCharCount > 0) {
                 drawCharCounter = false;
+            }
+            if (iconResId > 0) {
+                View view = getRootView().findViewById(iconResId);
+                if (ImageView.class.isInstance(view)) {
+                    ((ImageView)view).clearColorFilter();
+                }
             }
         }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);

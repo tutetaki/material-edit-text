@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.MaterialEditText;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -90,6 +89,7 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.action_settings) {
+
             return true;
         }
 
