@@ -47,7 +47,6 @@ public class MaterialEditText extends EditText {
     private CharSequence errorText;
     private TextPaint errorTextPaint;
 
-    private CharSequence labelText;
     private boolean floatingLabel;
     private TextPaint labelTextPaint;
     private AnimatorSet labelAnimation;
@@ -56,6 +55,12 @@ public class MaterialEditText extends EditText {
     private int labelTextColor;
     private float labelTextSize;
     private long labelDurationOffset;
+
+    private int charCount;
+    private int maxCharCount;
+    private boolean drawCharCounter;
+    private int charCountTextColor;
+    private TextPaint charCountTextPaint;
 
     public MaterialEditText(Context context) {
         this(context, null);
@@ -105,6 +110,7 @@ public class MaterialEditText extends EditText {
 
         highlightColor = Color.TRANSPARENT;
         hintColor = getCurrentHintTextColor();
+        charCountTextColor = getCurrentHintTextColor();
 
         if (!isEnabled()) {
             lineEffect = new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0);
@@ -122,10 +128,15 @@ public class MaterialEditText extends EditText {
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
             floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
+            maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
         }
 
         // Override API padding
         setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp);
+        if (maxCharCount > 0) {
+            appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
+            charCountTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        }
         if (floatingLabel) {
             appendPadding(0, (int) (dimen_8dp + dimen_12sp), 0, 0);
             labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
@@ -133,8 +144,6 @@ public class MaterialEditText extends EditText {
         setIncludeFontPadding(false); // Remove text top/bottom padding)
         setBackground(null);  // Remove API background
         setTextSize(16);
-
-        onTextChanged(getText(), 0, getText().length(), getText().length()); // Refresh label visibility
     }
 
     @Override
@@ -152,16 +161,25 @@ public class MaterialEditText extends EditText {
             errorTextPaint.setColor(highlightColor);
             errorTextPaint.setTextSize(dimen_12sp);
             canvas.drawText(getError(), 0, getError().length(), getScrollX(), getHeight() - dimen_8dp, errorTextPaint);
+        } else if (maxCharCount > 0) {
+            lineHeight = getHeight() - (2 * dimen_8dp + dimen_12sp);
+            if (drawCharCounter) {
+                charCountTextPaint.setColor(charCountTextColor);
+                charCountTextPaint.setTextSize(dimen_12sp);
+                charCountTextPaint.setTextAlign(Paint.Align.RIGHT);
+                String text = charCount + " / " + maxCharCount;
+                canvas.drawText(text, 0, text.length(), getScrollX() + getWidth(), getHeight() - dimen_8dp, charCountTextPaint);
+            }
         } else {
             lineHeight = getHeight() - dimen_8dp;
         }
 
         // Draw the unselected line
         defaultLinePaint.setStyle(Paint.Style.STROKE);
-        if (TextUtils.isEmpty(getError())) {
-            defaultLinePaint.setColor(hintColor);
+        if (!TextUtils.isEmpty(getError()) || (maxCharCount > 0 && charCount > maxCharCount)) {
+            defaultLinePaint.setColor(labelTextColor);
         } else {
-            defaultLinePaint.setColor(highlightColor);
+            defaultLinePaint.setColor(hintColor);
         }
         defaultLinePaint.setStrokeWidth(dimen_1dp);
         defaultLinePaint.setPathEffect(lineEffect);
@@ -187,10 +205,19 @@ public class MaterialEditText extends EditText {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     if (TextUtils.isEmpty(getError())) {
-                        highlightColor = obtainColorPrimary(getContext());
-                        if (labelY != getBaseline()) {
-                            labelTextColor = obtainColorPrimary(getContext());
+                        if (maxCharCount > 0 && charCount > maxCharCount) {
+                            highlightColor = getContext().getResources().getColor(R.color.material_red);
+                            if (labelY != getBaseline()) {
+                                labelTextColor = getContext().getResources().getColor(R.color.material_red);
+                            }
+                        } else {
+                            highlightColor = obtainColorPrimary(getContext());
+                            if (labelY != getBaseline()) {
+                                labelTextColor = obtainColorPrimary(getContext());
+                            }
                         }
+                    } else {
+                        labelTextColor = getContext().getResources().getColor(R.color.material_red);
                     }
                     lineThickness = dimen_2dp;
                     if (!isFocused()) {
@@ -219,7 +246,11 @@ public class MaterialEditText extends EditText {
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         if (focused) {
             if (TextUtils.isEmpty(getError())) {
-                highlightColor = obtainColorPrimary(getContext());
+                if (maxCharCount > 0 && charCount > maxCharCount) {
+                    highlightColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    highlightColor = obtainColorPrimary(getContext());
+                }
             }
             lineThickness = dimen_2dp;
             if (floatingLabel && getText().length() == 0) {
@@ -228,9 +259,21 @@ public class MaterialEditText extends EditText {
             } else {
                 labelTextColor = highlightColor;
             }
+            if (maxCharCount > 0) {
+                drawCharCounter = true;
+                if (charCount > maxCharCount) {
+                    charCountTextColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    charCountTextColor = hintColor;
+                }
+            }
         } else {
             if (TextUtils.isEmpty(getError())) {
-                highlightColor = Color.TRANSPARENT;
+                if (maxCharCount > 0 && charCount > maxCharCount) {
+                    highlightColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    highlightColor = Color.TRANSPARENT;
+                }
             }
             lineThickness = dimen_1dp;
             if (floatingLabel && getText().length() == 0) {
@@ -243,7 +286,14 @@ public class MaterialEditText extends EditText {
                     labelAnimation.start();
                 }
             } else {
-                labelTextColor = hintColor;
+                if (maxCharCount > 0 && charCount > maxCharCount) {
+                    labelTextColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    labelTextColor = hintColor;
+                }
+            }
+            if (maxCharCount > 0) {
+                drawCharCounter = false;
             }
         }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
@@ -257,6 +307,7 @@ public class MaterialEditText extends EditText {
         } else {
             appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
             highlightColor = getContext().getResources().getColor(R.color.material_red);
+            labelTextColor = getContext().getResources().getColor(R.color.material_red);
         }
     }
 
@@ -264,7 +315,6 @@ public class MaterialEditText extends EditText {
     public CharSequence getError() {
         return errorText;
     }
-
 
     @Override
     public void setEnabled(boolean enabled) {
@@ -274,6 +324,27 @@ public class MaterialEditText extends EditText {
             lineEffect = new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0);
         }
         super.setEnabled(enabled);
+    }
+
+    @Override
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        charCount = text.length();
+        if (maxCharCount > 0) {
+            if (drawCharCounter) {
+                if (charCount > maxCharCount) {
+                    highlightColor = getContext().getResources().getColor(R.color.material_red);
+                    labelTextColor = getContext().getResources().getColor(R.color.material_red);
+                } else {
+                    highlightColor = obtainColorPrimary(getContext());
+                    labelTextColor = obtainColorPrimary(getContext());
+                }
+            }
+            if (charCount > maxCharCount) {
+                charCountTextColor = getContext().getResources().getColor(R.color.material_red);
+            } else {
+                charCountTextColor = hintColor;
+            }
+        }
     }
 
     private void appendPadding(int left, int top, int right, int bottom) {
@@ -377,5 +448,13 @@ public class MaterialEditText extends EditText {
             }
         });
         return set;
+    }
+
+    public int getCharCount() {
+        return charCount;
+    }
+
+    public int getMaxCharCount() {
+        return maxCharCount;
     }
 }

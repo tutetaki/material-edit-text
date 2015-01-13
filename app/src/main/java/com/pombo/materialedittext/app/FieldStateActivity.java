@@ -38,6 +38,8 @@ public class FieldStateActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        medtError.setError("Username or Password is incorrect.");
+        if (savedInstanceState == null) {
+            medtError.setError("Username or Password is incorrect.");
+        }
     }
 }
