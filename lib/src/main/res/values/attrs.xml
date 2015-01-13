@@ -6,12 +6,8 @@
         <attr name="floatingLabel" format="boolean"/>
 
         <attr name="fullWidth" format="boolean"/>
-        <!-- Min characters count limit. 0 means no limit. -->
-        <attr name="minCharacters" format="integer"/>
-        <!-- max Characters count limit. 0 means no limit. -->
+        <!-- Max Characters count limit. 0 means no limit. -->
         <attr name="maxCharacters" format="integer"/>
     </declare-styleable>
-
-    <attr name="materialEditTextStyle" format="reference"/>
 
 </resources>

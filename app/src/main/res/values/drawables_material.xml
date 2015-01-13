@@ -4,6 +4,7 @@
 
 <resources>
 
+    <drawable name="communication_ic_invert_colors_on">@drawable/ic_invert_colors_white_24dp</drawable>
     <drawable name="communication_ic_phone">@drawable/ic_phone_white_24dp</drawable>
 
 </resources>

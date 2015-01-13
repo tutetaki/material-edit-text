@@ -3,6 +3,8 @@
 
     <string name="app_name">Material Design EditText</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="menu_switch_theme">Switch theme</string>
 
 </resources>

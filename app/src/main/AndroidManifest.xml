@@ -5,8 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:label="@string/app_name">
 
         <activity
             android:name=".MainActivity">
@@ -15,14 +14,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".FieldStateActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme"/>
-        <activity
-            android:name=".LightFieldStateActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.Light.DarkActionBar"/>
     </application>
 
 </manifest>
