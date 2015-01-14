@@ -52,7 +52,8 @@
                 android:layout_weight="3"
                 android:editable="false"
                 android:hint="Hint text"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +75,8 @@
                 android:layout_weight="3"
                 android:editable="false"
                 android:hint="Hint text"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +98,8 @@
                 android:layout_weight="3"
                 android:hint="Hint text"
                 android:singleLine="true"
-                android:text="Input tex"/>
+                android:text="Input tex"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +121,8 @@
                 android:layout_weight="3"
                 android:editable="false"
                 android:singleLine="true"
-                android:text="Input text"/>
+                android:text="Input text"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -140,7 +144,8 @@
                 android:layout_weight="3"
                 android:editable="false"
                 android:singleLine="true"
-                android:text="Input text"/>
+                android:text="Input text"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -163,7 +168,8 @@
                 android:editable="false"
                 android:enabled="false"
                 android:singleLine="true"
-                android:text="Input text"/>
+                android:text="Input text"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -199,7 +205,8 @@
                     android:editable="false"
                     android:hint="Phone"
                     android:singleLine="true"
-                    material:withIcon="@+id/img_1"/>
+                    material:withIcon="@+id/img_1"
+                    material:primaryColor="?attr/colorPrimary"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -236,7 +243,8 @@
                     android:hint="Phone"
                     android:singleLine="true"
                     android:text="650"
-                    material:withIcon="@+id/img_2"/>
+                    material:withIcon="@+id/img_2"
+                    material:primaryColor="?attr/colorPrimary"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -274,7 +282,8 @@
                     android:hint="Phone"
                     android:singleLine="true"
                     android:text="650-555-1234"
-                    material:withIcon="@+id/img_3"/>
+                    material:withIcon="@+id/img_3"
+                    material:primaryColor="?attr/colorPrimary"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -298,7 +307,8 @@
                 android:editable="false"
                 android:hint="Label text"
                 android:singleLine="true"
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -321,7 +331,8 @@
                 android:hint="Label text"
                 android:singleLine="true"
                 android:text="Input tex"
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -345,7 +356,8 @@
                 android:hint="Label text"
                 android:singleLine="true"
                 android:text="Input text"
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -370,7 +382,8 @@
                 android:hint="Label text"
                 android:singleLine="true"
                 android:text="Input text"
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -392,7 +405,8 @@
                 android:layout_weight="3"
                 android:editable="false"
                 android:hint="Hint text"
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -414,7 +428,8 @@
                 android:layout_weight="3"
                 android:hint="Hint text"
                 android:text="Input tex"
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -436,7 +451,8 @@
                 android:layout_weight="3"
                 android:editable="false"
                 android:hint="Label text"
-                android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."/>
+                android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -459,7 +475,8 @@
                 android:editable="false"
                 android:hint="Label text"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."
-                material:floatingLabel="true"/>
+                material:floatingLabel="true"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -483,7 +500,8 @@
                 android:singleLine="true"
                 android:text="Input text for a single line field with a max"
                 material:floatingLabel="true"
-                material:maxCharacters="50"/>
+                material:maxCharacters="50"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -508,7 +526,8 @@
                 android:singleLine="true"
                 android:text="Input text for a single line field with a maximum characters."
                 material:floatingLabel="true"
-                material:maxCharacters="50"/>
+                material:maxCharacters="50"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -531,7 +550,8 @@
                 android:hint="Multi-Line Input Label"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delic"
                 material:floatingLabel="true"
-                material:maxCharacters="120"/>
+                material:maxCharacters="120"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -555,7 +575,8 @@
                 android:hint="Multi-Line Input Label"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delicata an ius."
                 material:floatingLabel="true"
-                material:maxCharacters="120"/>
+                material:maxCharacters="120"
+                material:primaryColor="?attr/colorPrimary"/>
         </LinearLayout>
     </LinearLayout>
 

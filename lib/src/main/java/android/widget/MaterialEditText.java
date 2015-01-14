@@ -9,6 +9,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.os.Build;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -24,6 +25,8 @@ public class MaterialEditText extends EditText {
 
     private float dimen_1dp, dimen_2dp, dimen_8dp, dimen_16dp, dimen_20dp;
     private float dimen_12sp, dimen_16sp;
+
+    private int primaryColor;
 
     private int highlightColor;
     private int hintColor;
@@ -88,10 +91,23 @@ public class MaterialEditText extends EditText {
         dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
         dimen_16sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, displayMetrics);
 
+        // 0btain XML attributes
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
+            primaryColor  = ta.getColor(R.styleable.materialEditText_primaryColor, Color.BLACK);
+            floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
+            maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
+            iconResId = ta.getResourceId(R.styleable.materialEditText_withIcon, 0);
+        }
+
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
                 xA = 0;
                 xB = getWidth();
 
@@ -119,14 +135,6 @@ public class MaterialEditText extends EditText {
         line = new Path();
         defaultLine = new Path();
         errorTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-
-        // 0btain XML attributes
-        if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
-            floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
-            maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
-            iconResId = ta.getResourceId(R.styleable.materialEditText_withIcon, 0);
-        }
 
         // Override API padding
         setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp);
@@ -208,9 +216,9 @@ public class MaterialEditText extends EditText {
                                 labelTextColor = getContext().getResources().getColor(R.color.material_red);
                             }
                         } else {
-                            highlightColor = obtainColorPrimary(getContext());
+                            highlightColor = primaryColor;
                             if (labelY != getBaseline()) {
-                                labelTextColor = obtainColorPrimary(getContext());
+                                labelTextColor = primaryColor;
                             }
                         }
                     } else {
@@ -246,7 +254,7 @@ public class MaterialEditText extends EditText {
                 if (maxCharCount > 0 && charCount > maxCharCount) {
                     highlightColor = getContext().getResources().getColor(R.color.material_red);
                 } else {
-                    highlightColor = obtainColorPrimary(getContext());
+                    highlightColor = primaryColor;
                 }
             }
             lineThickness = dimen_2dp;
@@ -344,8 +352,8 @@ public class MaterialEditText extends EditText {
                     highlightColor = getContext().getResources().getColor(R.color.material_red);
                     labelTextColor = getContext().getResources().getColor(R.color.material_red);
                 } else {
-                    highlightColor = obtainColorPrimary(getContext());
-                    labelTextColor = obtainColorPrimary(getContext());
+                    highlightColor = primaryColor;
+                    labelTextColor = primaryColor;
                 }
             }
             if (charCount > maxCharCount) {
@@ -358,22 +366,6 @@ public class MaterialEditText extends EditText {
 
     private void appendPadding(int left, int top, int right, int bottom) {
         setPadding(getPaddingLeft() + left, getPaddingTop() + top, getPaddingRight() + right, getPaddingBottom() + bottom);
-    }
-
-    private int obtainColorPrimary(Context context) {
-        TypedValue typedValue = new TypedValue();
-        TypedArray a = context.getTheme().obtainStyledAttributes(typedValue.data, new int[]{ R.attr.colorPrimary });
-        int color = a.getColor(0, 0);
-        a.recycle();
-        return color;
-    }
-
-    private int obtainColorAccent(Context context) {
-        TypedValue typedValue = new TypedValue();
-        TypedArray a = context.getTheme().obtainStyledAttributes(typedValue.data, new int[]{ R.attr.colorAccent });
-        int color = a.getColor(0, 0);
-        a.recycle();
-        return color;
     }
 
     private AnimatorSet createLineAnimation(float startA, float startB, float targetA, float targetB) {

@@ -2,14 +2,14 @@
 <resources>
 
     <declare-styleable name="materialEditText">
+        <!-- Highlight color of floating label text, underline. -->
+        <attr name="primaryColor" format="color"/>
         <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
         <!-- Max Characters count limit. 0 means no limit. -->
         <attr name="maxCharacters" format="integer"/>
         <!-- Icon (ImageView) associated to this EditText. -->
         <attr name="withIcon" format="reference"/>
-
-        <attr name="fullWidth" format="boolean"/>
     </declare-styleable>
 
 </resources>
