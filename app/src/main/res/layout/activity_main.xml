@@ -50,7 +50,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Hint text"
                 android:singleLine="true"
                 material:primaryColor="?attr/colorPrimary"/>
@@ -73,7 +72,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Hint text"
                 android:singleLine="true"
                 material:primaryColor="?attr/colorPrimary"/>
@@ -119,7 +117,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
+                android:hint="Single Line Input Label"
                 android:singleLine="true"
                 android:text="Input text"
                 material:primaryColor="?attr/colorPrimary"/>
@@ -142,7 +140,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
+                android:hint="Hint text"
                 android:singleLine="true"
                 android:text="Input text"
                 material:primaryColor="?attr/colorPrimary"/>
@@ -165,8 +163,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:enabled="false"
+                android:hint="Hint text"
                 android:singleLine="true"
                 android:text="Input text"
                 material:primaryColor="?attr/colorPrimary"/>
@@ -202,11 +200,10 @@
                     android:id="@+id/medt_normal_with_hint_text_icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:editable="false"
                     android:hint="Phone"
                     android:singleLine="true"
-                    material:withIcon="@+id/img_1"
-                    material:primaryColor="?attr/colorPrimary"/>
+                    material:primaryColor="?attr/colorPrimary"
+                    material:withIcon="@+id/img_1"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -243,8 +240,8 @@
                     android:hint="Phone"
                     android:singleLine="true"
                     android:text="650"
-                    material:withIcon="@+id/img_2"
-                    material:primaryColor="?attr/colorPrimary"/>
+                    material:primaryColor="?attr/colorPrimary"
+                    material:withIcon="@+id/img_2"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -278,12 +275,11 @@
                     android:id="@+id/medt_normal_with_input_text_icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:editable="false"
                     android:hint="Phone"
                     android:singleLine="true"
                     android:text="650-555-1234"
-                    material:withIcon="@+id/img_3"
-                    material:primaryColor="?attr/colorPrimary"/>
+                    material:primaryColor="?attr/colorPrimary"
+                    material:withIcon="@+id/img_3"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -304,7 +300,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Label text"
                 android:singleLine="true"
                 material:floatingLabel="true"
@@ -352,7 +347,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Label text"
                 android:singleLine="true"
                 android:text="Input text"
@@ -377,7 +371,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:enabled="false"
                 android:hint="Label text"
                 android:singleLine="true"
@@ -403,7 +396,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Hint text"
                 material:floatingLabel="true"
                 material:primaryColor="?attr/colorPrimary"/>
@@ -449,7 +441,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Label text"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."
                 material:primaryColor="?attr/colorPrimary"/>
@@ -472,7 +463,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Label text"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."
                 material:floatingLabel="true"
@@ -521,7 +511,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Single Line Input Label"
                 android:singleLine="true"
                 android:text="Input text for a single line field with a maximum characters."
@@ -571,7 +560,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:editable="false"
                 android:hint="Multi-Line Input Label"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delicata an ius."
                 material:floatingLabel="true"
