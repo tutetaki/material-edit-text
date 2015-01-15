@@ -3,7 +3,7 @@
 
     <declare-styleable name="materialEditText">
         <!-- Highlight color of floating label text, underline. -->
-        <attr name="primaryColor" format="color"/>
+        <attr name="materialEditTextColor" format="color"/>
         <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
         <!-- Max Characters count limit. 0 means no limit. -->

@@ -5,10 +5,10 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -21,12 +21,14 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import com.pombo.materialedittext.lib.R;
 
+import java.lang.reflect.Field;
+
 public class MaterialEditText extends EditText {
 
     private float dimen_1dp, dimen_2dp, dimen_8dp, dimen_16dp, dimen_20dp;
     private float dimen_12sp, dimen_16sp;
 
-    private int primaryColor;
+    private int materialEditTextColor;
 
     private int highlightColor;
     private int hintColor;
@@ -39,8 +41,7 @@ public class MaterialEditText extends EditText {
     private Path line;
     private Path defaultLine;
     private AnimatorSet lineAnimation;
-    private float xA;
-    private float xB;
+    private float xA, xB;
 
     private CharSequence errorText;
     private TextPaint errorTextPaint;
@@ -48,8 +49,7 @@ public class MaterialEditText extends EditText {
     private boolean floatingLabel;
     private TextPaint labelTextPaint;
     private AnimatorSet labelAnimation;
-    private float labelX;
-    private float labelY;
+    private float labelX, labelY;
     private int labelTextColor;
     private float labelTextSize;
     private long labelDurationOffset;
@@ -94,7 +94,7 @@ public class MaterialEditText extends EditText {
         // 0btain XML attributes
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
-            primaryColor  = ta.getColor(R.styleable.materialEditText_primaryColor, Color.BLACK);
+            materialEditTextColor = ta.getColor(R.styleable.materialEditText_materialEditTextColor, Color.BLACK);
             floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
             maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
             iconResId = ta.getResourceId(R.styleable.materialEditText_withIcon, 0);
@@ -120,14 +120,14 @@ public class MaterialEditText extends EditText {
             }
         });
 
-        highlightColor = Color.TRANSPARENT;
-        hintColor = getCurrentHintTextColor();
         charCountTextColor = getCurrentHintTextColor();
-
         if (!isEnabled()) {
             lineEffect = new DashPathEffect(new float[]{ Math.round(dimen_1dp), Math.round(dimen_2dp) }, 0);
             highlightColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
             hintColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
+        } else {
+            highlightColor = Color.TRANSPARENT;
+            hintColor = getCurrentHintTextColor();
         }
         lineThickness = dimen_1dp;
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -181,7 +181,9 @@ public class MaterialEditText extends EditText {
 
         // Draw the unselected line
         defaultLinePaint.setStyle(Paint.Style.STROKE);
-        if (!TextUtils.isEmpty(getError()) || (maxCharCount > 0 && charCount > maxCharCount)) {
+        if (!TextUtils.isEmpty(getError())) {
+            defaultLinePaint.setColor(highlightColor);
+        } else if (maxCharCount > 0 && charCount > maxCharCount) {
             defaultLinePaint.setColor(labelTextColor);
         } else {
             defaultLinePaint.setColor(hintColor);
@@ -216,9 +218,9 @@ public class MaterialEditText extends EditText {
                                 labelTextColor = getContext().getResources().getColor(R.color.material_red);
                             }
                         } else {
-                            highlightColor = primaryColor;
+                            highlightColor = materialEditTextColor;
                             if (labelY != getBaseline()) {
-                                labelTextColor = primaryColor;
+                                labelTextColor = materialEditTextColor;
                             }
                         }
                     } else {
@@ -254,7 +256,7 @@ public class MaterialEditText extends EditText {
                 if (maxCharCount > 0 && charCount > maxCharCount) {
                     highlightColor = getContext().getResources().getColor(R.color.material_red);
                 } else {
-                    highlightColor = primaryColor;
+                    highlightColor = materialEditTextColor;
                 }
             }
             lineThickness = dimen_2dp;
@@ -293,7 +295,7 @@ public class MaterialEditText extends EditText {
                     labelAnimation = createFloationgLabelAnimation(labelX, labelY, getScrollX(), getBaseline(), labelTextSize, dimen_16sp, labelTextColor, hintColor, labelDurationOffset);
                     labelAnimation.start();
                 } else {
-                    labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, dimen_16sp, highlightColor, hintColor, 0);
+                    labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, dimen_16sp, materialEditTextColor, hintColor, 0);
                     labelAnimation.start();
                 }
             } else {
@@ -352,8 +354,8 @@ public class MaterialEditText extends EditText {
                     highlightColor = getContext().getResources().getColor(R.color.material_red);
                     labelTextColor = getContext().getResources().getColor(R.color.material_red);
                 } else {
-                    highlightColor = primaryColor;
-                    labelTextColor = primaryColor;
+                    highlightColor = materialEditTextColor;
+                    labelTextColor = materialEditTextColor;
                 }
             }
             if (charCount > maxCharCount) {
