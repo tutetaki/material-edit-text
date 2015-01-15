@@ -251,67 +251,69 @@ public class MaterialEditText extends EditText {
 
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        if (focused) {
-            if (TextUtils.isEmpty(getError())) {
-                if (maxCharCount > 0 && charCount > maxCharCount) {
-                    highlightColor = getContext().getResources().getColor(R.color.material_red);
-                } else {
-                    highlightColor = materialEditTextColor;
+        if (isEnabled()) {
+            if (focused) {
+                if (TextUtils.isEmpty(getError())) {
+                    if (maxCharCount > 0 && charCount > maxCharCount) {
+                        highlightColor = getContext().getResources().getColor(R.color.material_red);
+                    } else {
+                        highlightColor = materialEditTextColor;
+                    }
                 }
-            }
-            lineThickness = dimen_2dp;
-            if (floatingLabel && getText().length() == 0) {
-                labelAnimation = createFloationgLabelAnimation(getScrollX(), getBaseline(), getScrollX(), dimen_16dp + dimen_12sp, dimen_16sp, dimen_12sp, hintColor, highlightColor, 0);
-                labelAnimation.start();
-            } else {
-                labelTextColor = highlightColor;
-            }
-            if (maxCharCount > 0) {
-                drawCharCounter = true;
-                if (charCount > maxCharCount) {
-                    charCountTextColor = getContext().getResources().getColor(R.color.material_red);
-                } else {
-                    charCountTextColor = hintColor;
-                }
-            }
-            if (iconResId > 0) {
-                View view = getRootView().findViewById(iconResId);
-                if (ImageView.class.isInstance(view)) {
-                    ((ImageView)view).setColorFilter(highlightColor);
-                }
-            }
-        } else {
-            if (TextUtils.isEmpty(getError())) {
-                if (maxCharCount > 0 && charCount > maxCharCount) {
-                    highlightColor = getContext().getResources().getColor(R.color.material_red);
-                } else {
-                    highlightColor = Color.TRANSPARENT;
-                }
-            }
-            lineThickness = dimen_1dp;
-            if (floatingLabel && getText().length() == 0) {
-                if (labelAnimation != null) {
-                    labelAnimation.cancel();
-                    labelAnimation = createFloationgLabelAnimation(labelX, labelY, getScrollX(), getBaseline(), labelTextSize, dimen_16sp, labelTextColor, hintColor, labelDurationOffset);
+                lineThickness = dimen_2dp;
+                if (floatingLabel && getText().length() == 0) {
+                    labelAnimation = createFloationgLabelAnimation(getScrollX(), getBaseline(), getScrollX(), dimen_16dp + dimen_12sp, dimen_16sp, dimen_12sp, hintColor, highlightColor, 0);
                     labelAnimation.start();
                 } else {
-                    labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, dimen_16sp, materialEditTextColor, hintColor, 0);
-                    labelAnimation.start();
+                    labelTextColor = highlightColor;
+                }
+                if (maxCharCount > 0) {
+                    drawCharCounter = true;
+                    if (charCount > maxCharCount) {
+                        charCountTextColor = getContext().getResources().getColor(R.color.material_red);
+                    } else {
+                        charCountTextColor = hintColor;
+                    }
+                }
+                if (iconResId > 0) {
+                    View view = getRootView().findViewById(iconResId);
+                    if (ImageView.class.isInstance(view)) {
+                        ((ImageView) view).setColorFilter(highlightColor);
+                    }
                 }
             } else {
-                if (maxCharCount > 0 && charCount > maxCharCount) {
-                    labelTextColor = getContext().getResources().getColor(R.color.material_red);
-                } else {
-                    labelTextColor = hintColor;
+                if (TextUtils.isEmpty(getError())) {
+                    if (maxCharCount > 0 && charCount > maxCharCount) {
+                        highlightColor = getContext().getResources().getColor(R.color.material_red);
+                    } else {
+                        highlightColor = Color.TRANSPARENT;
+                    }
                 }
-            }
-            if (maxCharCount > 0) {
-                drawCharCounter = false;
-            }
-            if (iconResId > 0) {
-                View view = getRootView().findViewById(iconResId);
-                if (ImageView.class.isInstance(view)) {
-                    ((ImageView)view).clearColorFilter();
+                lineThickness = dimen_1dp;
+                if (floatingLabel && getText().length() == 0) {
+                    if (labelAnimation != null) {
+                        labelAnimation.cancel();
+                        labelAnimation = createFloationgLabelAnimation(labelX, labelY, getScrollX(), getBaseline(), labelTextSize, dimen_16sp, labelTextColor, hintColor, labelDurationOffset);
+                        labelAnimation.start();
+                    } else {
+                        labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, dimen_16sp, materialEditTextColor, hintColor, 0);
+                        labelAnimation.start();
+                    }
+                } else {
+                    if (maxCharCount > 0 && charCount > maxCharCount) {
+                        labelTextColor = getContext().getResources().getColor(R.color.material_red);
+                    } else {
+                        labelTextColor = hintColor;
+                    }
+                }
+                if (maxCharCount > 0) {
+                    drawCharCounter = false;
+                }
+                if (iconResId > 0) {
+                    View view = getRootView().findViewById(iconResId);
+                    if (ImageView.class.isInstance(view)) {
+                        ((ImageView) view).clearColorFilter();
+                    }
                 }
             }
         }
