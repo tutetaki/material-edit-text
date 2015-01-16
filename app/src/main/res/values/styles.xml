@@ -1,15 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/material_light_blue</item>
-        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
-        <item name="colorAccent">@color/material_purple</item>
-    </style>
-
-    <style name="AppTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/material_light_blue</item>
-        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
-        <item name="colorAccent">@color/material_purple</item>
+    <style name="AppEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
