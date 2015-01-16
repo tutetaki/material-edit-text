@@ -7,5 +7,6 @@
 
     <color name="material_purple">@color/material_purple_500</color>
     <color name="material_purple_500">#9c27b0</color>
+    <color name="material_purple_700">#7b1fa2</color>
 
 </resources>

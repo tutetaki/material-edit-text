@@ -2,16 +2,16 @@
 <resources>
 
     <style name="AppTheme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/material_light_blue</item>
-        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
-        <item name="colorAccent">@color/material_purple</item>
+        <item name="colorPrimary">@color/material_purple</item>
+        <item name="colorPrimaryDark">@color/material_purple_700</item>
+        <item name="colorAccent">@color/material_light_blue</item>
         <item name="android:editTextStyle">@style/AppEditText</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/material_light_blue</item>
-        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
-        <item name="colorAccent">@color/material_purple</item>
+        <item name="colorPrimary">@color/material_purple</item>
+        <item name="colorPrimaryDark">@color/material_purple_700</item>
+        <item name="colorAccent">@color/material_light_blue</item>
         <item name="android:editTextStyle">@style/AppEditText</item>
     </style>
 
