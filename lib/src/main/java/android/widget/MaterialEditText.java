@@ -244,8 +244,13 @@ public class MaterialEditText extends EditText {
                 case MotionEvent.ACTION_CANCEL:
                     if (!isFocused()) {
                         if (TextUtils.isEmpty(getError())) {
-                            highlightColor = Color.TRANSPARENT;
-                            labelTextColor = hintColor;
+                            if (maxCharCount > 0 && charCount > maxCharCount) {
+                                highlightColor = getContext().getResources().getColor(R.color.material_red);
+                                labelTextColor = getContext().getResources().getColor(R.color.material_red);
+                            } else {
+                                highlightColor = Color.TRANSPARENT;
+                                labelTextColor = hintColor;
+                            }
                         }
                         lineThickness = dimen_1dp;
                         invalidate();
