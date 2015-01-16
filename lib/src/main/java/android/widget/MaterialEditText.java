@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -21,12 +20,12 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import com.pombo.materialedittext.lib.R;
 
-import java.lang.reflect.Field;
-
 public class MaterialEditText extends EditText {
 
     private float dimen_1dp, dimen_2dp, dimen_8dp, dimen_16dp, dimen_20dp;
     private float dimen_12sp, dimen_16sp;
+
+    private float basePaddingLeft, basePaddingTop, basePaddingRight, basePaddingBottom;
 
     private int materialEditTextColor;
 
@@ -94,7 +93,7 @@ public class MaterialEditText extends EditText {
         // 0btain XML attributes
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.materialEditText, 0, 0);
-            materialEditTextColor = ta.getColor(R.styleable.materialEditText_materialEditTextColor, Color.BLACK);
+            materialEditTextColor = ta.getColor(R.styleable.materialEditText_materialEditTextColor, obtainColorAccent());
             floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
             maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
             iconResId = ta.getResourceId(R.styleable.materialEditText_withIcon, 0);
@@ -137,18 +136,26 @@ public class MaterialEditText extends EditText {
         errorTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
         // Override API padding
-        setPadding(0, (int) dimen_16dp, 0, (int) dimen_16dp);
+        basePaddingLeft = 0;
+        basePaddingTop = dimen_16dp;
+        basePaddingRight = 0;
+        basePaddingBottom = dimen_16dp;
         if (maxCharCount > 0) {
-            appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
+            basePaddingBottom += dimen_8dp + dimen_12sp;
             charCountTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         }
         if (floatingLabel) {
-            appendPadding(0, (int) (dimen_8dp + dimen_12sp), 0, 0);
+            basePaddingTop += dimen_8dp + dimen_12sp;
             labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         }
+        setPadding(0, 0, 0, 0);
         setIncludeFontPadding(false); // Remove text top/bottom padding)
         setBackground(null);  // Remove API background
-        setTextSize(16);
+    }
+
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        super.setPadding((int) basePaddingLeft + left, (int) basePaddingTop + top, (int) basePaddingRight + right, (int) basePaddingBottom + bottom);
     }
 
     @Override
@@ -262,7 +269,7 @@ public class MaterialEditText extends EditText {
                 }
                 lineThickness = dimen_2dp;
                 if (floatingLabel && getText().length() == 0) {
-                    labelAnimation = createFloationgLabelAnimation(getScrollX(), getBaseline(), getScrollX(), dimen_16dp + dimen_12sp, dimen_16sp, dimen_12sp, hintColor, highlightColor, 0);
+                    labelAnimation = createFloationgLabelAnimation(getScrollX(), getBaseline(), getScrollX(), dimen_16dp + dimen_12sp, getTextSize(), dimen_12sp, hintColor, highlightColor, 0);
                     labelAnimation.start();
                 } else {
                     labelTextColor = highlightColor;
@@ -293,10 +300,10 @@ public class MaterialEditText extends EditText {
                 if (floatingLabel && getText().length() == 0) {
                     if (labelAnimation != null) {
                         labelAnimation.cancel();
-                        labelAnimation = createFloationgLabelAnimation(labelX, labelY, getScrollX(), getBaseline(), labelTextSize, dimen_16sp, labelTextColor, hintColor, labelDurationOffset);
+                        labelAnimation = createFloationgLabelAnimation(labelX, labelY, getScrollX(), getBaseline(), labelTextSize, getTextSize(), labelTextColor, hintColor, labelDurationOffset);
                         labelAnimation.start();
                     } else {
-                        labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, dimen_16sp, materialEditTextColor, hintColor, 0);
+                        labelAnimation = createFloationgLabelAnimation(getScrollX(), dimen_16dp + dimen_12sp, getScrollX(), getBaseline(), dimen_12sp, getTextSize(), materialEditTextColor, hintColor, 0);
                         labelAnimation.start();
                     }
                 } else {
@@ -324,12 +331,13 @@ public class MaterialEditText extends EditText {
     public void setError(CharSequence error) {
         errorText = error;
         if (TextUtils.isEmpty(error)) {
-            appendPadding(0, 0, 0, (int) -(dimen_8dp + dimen_12sp));
+            basePaddingBottom -= dimen_8dp + dimen_12sp;
         } else {
-            appendPadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
+            basePaddingBottom += dimen_8dp + dimen_12sp;
             highlightColor = getContext().getResources().getColor(R.color.material_red);
             labelTextColor = getContext().getResources().getColor(R.color.material_red);
         }
+        setPadding(0, 0, 0, 0);
     }
 
     @Override
@@ -366,10 +374,6 @@ public class MaterialEditText extends EditText {
                 charCountTextColor = hintColor;
             }
         }
-    }
-
-    private void appendPadding(int left, int top, int right, int bottom) {
-        setPadding(getPaddingLeft() + left, getPaddingTop() + top, getPaddingRight() + right, getPaddingBottom() + bottom);
     }
 
     private AnimatorSet createLineAnimation(float startA, float startB, float targetA, float targetB) {
@@ -461,5 +465,18 @@ public class MaterialEditText extends EditText {
 
     public int getMaxCharCount() {
         return maxCharCount;
+    }
+
+    private int obtainColorAccent() {
+        Context context = getContext();
+        int colorAccentId = getResources().getIdentifier("colorAccent", "attr", context.getPackageName());
+        if (colorAccentId > 0) {
+            TypedValue typedValue = new TypedValue();
+            TypedArray a = context.getTheme().obtainStyledAttributes(typedValue.data, new int[]{ colorAccentId });
+            int color = a.getColor(0, 0);
+            a.recycle();
+            return color;
+        }
+        return Color.BLACK;
     }
 }

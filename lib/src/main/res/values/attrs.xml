@@ -6,6 +6,8 @@
         <attr name="materialEditTextColor" format="color"/>
         <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
+
+        <attr name="labelTextSize" format="dimension"/>
         <!-- Max Characters count limit. 0 means no limit. -->
         <attr name="maxCharacters" format="integer"/>
         <!-- Icon (ImageView) associated to this EditText. -->
