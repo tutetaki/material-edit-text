@@ -23,7 +23,7 @@ import com.pombo.materialedittext.lib.R;
 public class MaterialEditText extends EditText {
 
     private float dimen_1dp, dimen_2dp, dimen_8dp, dimen_16dp, dimen_20dp;
-    private float dimen_12sp, dimen_16sp;
+    private float dimen_12sp;
 
     private float basePaddingLeft, basePaddingTop, basePaddingRight, basePaddingBottom;
 
@@ -88,7 +88,6 @@ public class MaterialEditText extends EditText {
         dimen_16dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, displayMetrics);
         dimen_20dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, displayMetrics);
         dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
-        dimen_16sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, displayMetrics);
 
         // 0btain XML attributes
         if (attrs != null) {
