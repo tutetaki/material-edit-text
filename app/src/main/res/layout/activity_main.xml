@@ -443,7 +443,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Label text"
-                android:inputType="textNoSuggestions"
+                android:inputType="textNoSuggestions|textMultiLine"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."/>
         </LinearLayout>
 
@@ -465,7 +465,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Label text"
-                android:inputType="textNoSuggestions"
+                android:inputType="textNoSuggestions|textMultiLine"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit sit, nobis delicata an ius."
                 material:floatingLabel="true"/>
         </LinearLayout>
@@ -538,7 +538,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Multi-Line Input Label"
-                android:inputType="textNoSuggestions"
+                android:inputType="textNoSuggestions|textMultiLine"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delic"
                 material:floatingLabel="true"
                 material:maxCharacters="120"/>
@@ -562,7 +562,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Multi-Line Input Label"
-                android:inputType="textNoSuggestions"
+                android:inputType="textNoSuggestions|textMultiLine"
                 android:text="Lorem ipsum dolor sit amet, tritani alienum dignissim mea id, cu assum voluptatum scripserit site, nobis delicata an ius."
                 material:floatingLabel="true"
                 material:maxCharacters="120"/>
