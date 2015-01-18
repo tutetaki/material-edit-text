@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.pombo.materialedittext.app"
-        minSdkVersion 7
+        minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
         versionName "1.0.0"
@@ -25,7 +25,9 @@ android {
 }
 
 dependencies {
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+
     compile 'com.pombo:materialedittext:1.0.0-SNAPSHOT'
-    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.jakewharton:butterknife:6.0.0'
 }

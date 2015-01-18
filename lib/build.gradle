@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.pombo.materialedittext.lib"
-        minSdkVersion 7
+        minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
         versionName VERSION_NAME
