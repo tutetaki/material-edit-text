@@ -6,23 +6,34 @@ Material Design EditText
 Usage
 -----
 
-
+```xml
+<MaterialEditText
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:hint="Hint text"
+  android:text="Input text"
+  material:floatingLabel="true"
+  material:maxCharacters="120"
+  material:withIcon="@+id/image_view"/>
+```
 
 Download
 --------
 
 Download the [latest JAR]() or grab via Maven:
+
 ```xml
 <dependency>
-  <groupId>com.pombo</groupId>
+  <groupId>fr.erictruong</groupId>
   <artifactId>materialedittext</artifactId>
   <version>1.0.0</version>
 </dependency>
 ```
 
 or Gradle:
+
 ```groovy
-compile 'com.pombo:materialedittext:1.0.0'
+compile 'fr.erictruong:materialedittext:1.0.0'
 ```
 
 License

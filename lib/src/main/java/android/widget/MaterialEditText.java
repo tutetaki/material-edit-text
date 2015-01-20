@@ -18,7 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import com.pombo.materialedittext.lib.R;
+import fr.erictruong.materialedittext.lib.R;
 
 public class MaterialEditText extends EditText {
 

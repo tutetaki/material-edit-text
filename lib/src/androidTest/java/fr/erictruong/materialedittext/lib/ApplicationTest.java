@@ -1,4 +1,4 @@
-package com.pombo.materialedittext.lib;
+package fr.erictruong.materialedittext.lib;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
