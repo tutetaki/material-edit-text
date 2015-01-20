@@ -9,12 +9,17 @@
         <attr name="materialEditTextColor" format="color"/>
         <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
-
-        <attr name="labelTextSize" format="dimension"/>
-
+        <!-- Max characters count limit. 0 means no max. -->
         <attr name="maxCharacters"/>
         <!-- Icon (ImageView) associated to this EditText. -->
         <attr name="withIcon" format="reference"/>
+
+        <attr name="labelTextSize" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="fullwidthEditText">
+        <!-- Max characters count limit. 0 means no max. -->
+        <attr name="maxCharacters"/>
     </declare-styleable>
 
 </resources>

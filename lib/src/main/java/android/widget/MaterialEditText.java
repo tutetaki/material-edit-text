@@ -79,7 +79,7 @@ public class MaterialEditText extends EditText {
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs){
+    private void init(Context context, AttributeSet attrs) {
         Resources r = getResources();
         DisplayMetrics displayMetrics = r.getDisplayMetrics();
         dimen_1dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, displayMetrics);
