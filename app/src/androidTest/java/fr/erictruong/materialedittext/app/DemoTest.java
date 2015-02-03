@@ -1,142 +1,109 @@
 package fr.erictruong.materialedittext.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.widget.EditText;
-import com.robotium.solo.Solo;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class DemoTest extends ActivityInstrumentationTestCase2<MainActivity> {
-
-    private Solo solo;
 
     public DemoTest() {
         super(MainActivity.class);
     }
 
-    @Override
-    public void setUp() throws Exception {
-    }
-
-    @Override
-    public void tearDown() throws Exception {
-        solo.finishOpenedActivities();
-    }
-
-    public void testThemeDark() {
+    public void testDemo_darkTheme() throws InterruptedException {
         Intent intent = new Intent();
         intent.putExtra("theme", 1);
         setActivityIntent(intent);
-        solo = new Solo(getInstrumentation(), getActivity());
-
-        demo();
+        performDemo(getActivity());
     }
 
-    public void testDemoLight() {
+    public void testDemo_lightTheme() throws InterruptedException {
         Intent intent = new Intent();
         intent.putExtra("theme", 0);
         setActivityIntent(intent);
-        solo = new Solo(getInstrumentation(), getActivity());
-
-        demo();
+        performDemo(getActivity());
     }
 
-    private void demo() {
-        int sleepDuration = 400;
+    private void performDemo(Activity activity) throws InterruptedException {
+        onView(withId(R.id.edt_api)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.edt_api));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_hint_text)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_hint_text));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_press)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_press));
-        solo.sleep(sleepDuration);
-
-        EditText medtFocus = (EditText) solo.getView(R.id.medt_focus);
-        solo.clickOnView(medtFocus);
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_focus)).perform(scrollTo(), click());
+        final EditText medtFocus = (EditText) activity.findViewById(R.id.medt_focus);
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                medtFocus.setSelection(medtFocus.length());
+            }
+        });
         while (!TextUtils.isEmpty(medtFocus.getText())) {
-            solo.sendKey(Solo.DELETE);
+            onView(withId(R.id.medt_focus)).perform(pressKey(KeyEvent.KEYCODE_DEL));
         }
-        solo.sleep(sleepDuration);
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_input_text));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_input_text)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_error));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_error)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_disabled));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_disabled)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_hint_text_icon));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_hint_text_icon)).perform(scrollTo(), click());
 
-        EditText medtFocusIcon = (EditText) solo.getView(R.id.medt_focus_icon);
-        solo.clickOnView(medtFocusIcon);
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_focus_icon)).perform(scrollTo(), click());
+        final EditText medtFocusIcon = (EditText) activity.findViewById(R.id.medt_focus_icon);
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                medtFocusIcon.setSelection(medtFocusIcon.length());
+            }
+        });
         while (!TextUtils.isEmpty(medtFocusIcon.getText())) {
-            solo.sendKey(Solo.DELETE);
+            onView(withId(R.id.medt_focus_icon)).perform(pressKey(KeyEvent.KEYCODE_DEL));
         }
-        solo.sleep(sleepDuration);
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_input_text_icon));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_input_text_icon)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_hint_text_label));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_hint_text_label)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_focus_label));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_focus_label)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_hint_text_label));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_input_text_label)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_input_text_label));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_disabled_label)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_disabled_label));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_hint_text_multi)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_hint_text_multi));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_focus_multi)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_focus_multi));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_input_text_multi)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_input_text_multi));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_normal_with_input_text_label_multi)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_normal_with_input_text_label_multi));
-        solo.sleep(sleepDuration);
-
-        final EditText medtCharacterCounter = (EditText) solo.getView(R.id.medt_character_counter);
-        solo.clickOnView(medtCharacterCounter);
-        solo.sleep(sleepDuration);
-        solo.scrollViewToSide(medtCharacterCounter, Solo.RIGHT);
-        getActivity().runOnUiThread(new Runnable() {
+        onView(withId(R.id.medt_character_counter)).perform(scrollTo(), swipeRight());
+        final EditText medtCharacterCounter = (EditText) activity.findViewById(R.id.medt_character_counter);
+        activity.runOnUiThread(new Runnable() {
             public void run() {
                 medtCharacterCounter.setSelection(medtCharacterCounter.length());
             }
         });
-        solo.sleep(sleepDuration);
-        for (int i = 0; i < 10; i++) {
-            solo.typeText(medtCharacterCounter, "a");
+        String stringToBeTyped = "I am a loooooong text";
+        onView(withId(R.id.medt_character_counter)).perform(typeTextIntoFocusedView(stringToBeTyped));
+        for (int i = 0; i < stringToBeTyped.length(); i++) {
+            onView(withId(R.id.medt_character_counter)).perform(pressKey(KeyEvent.KEYCODE_DEL));
+            Thread.sleep(50);
         }
-        solo.sleep(sleepDuration);
-        for (int i = 0; i < 10; i++) {
-            solo.sendKey(Solo.DELETE);
-        }
-        solo.sleep(sleepDuration);
 
-        solo.clickOnView(solo.getView(R.id.medt_character_counter_exceeding));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_character_counter_exceeding)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_character_counter_multi));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_character_counter_multi)).perform(scrollTo(), click());
 
-        solo.clickOnView(solo.getView(R.id.medt_character_counter_exceeding_multi));
-        solo.sleep(sleepDuration);
+        onView(withId(R.id.medt_character_counter_exceeding_multi)).perform(scrollTo(), click());
     }
 }
