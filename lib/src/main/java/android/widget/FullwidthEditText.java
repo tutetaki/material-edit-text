@@ -16,6 +16,7 @@ public class FullwidthEditText extends EditText {
     private float dimen_12sp;
 
     private float basePaddingLeft, basePaddingTop, basePaddingRight, basePaddingBottom;
+    private float paddingLeft, paddingTop, paddingRight, paddingBottom;
 
     private int hintColor;
 
@@ -67,9 +68,7 @@ public class FullwidthEditText extends EditText {
         }
 
         // Override API padding
-        basePaddingLeft = 0;
         basePaddingTop = dimen_20dp;
-        basePaddingRight = 0;
         basePaddingBottom = dimen_20dp;
         if (maxCharCount > 0) {
             if (getMaxLines() > 1) {
@@ -77,13 +76,45 @@ public class FullwidthEditText extends EditText {
             }
             charCountTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         }
-        setPadding(0, 0, 0, 0);
+        updatePadding();
         setIncludeFontPadding(false); // Remove text top/bottom padding)
         setBackground(null);  // Remove API background
     }
 
+    private void updatePadding() {
+        super.setPadding((int) (basePaddingLeft + paddingLeft), (int) (basePaddingTop + paddingTop), (int) (basePaddingRight + paddingRight), (int) (basePaddingBottom + paddingBottom));
+    }
+
+    public void setBasePadding(int left, int top, int right, int bottom) {
+        basePaddingLeft = left;
+        basePaddingTop = top;
+        basePaddingRight = right;
+        basePaddingBottom = bottom;
+        super.setPadding((int) paddingLeft + left, (int) paddingTop + top, (int) paddingRight + right, (int) paddingBottom + bottom);
+    }
+
+    public float getBasePaddingLeft() {
+        return basePaddingLeft;
+    }
+
+    public float getBasePaddingTop() {
+        return basePaddingTop;
+    }
+
+    public float getBasePaddingRight() {
+        return basePaddingRight;
+    }
+
+    public float getBasePaddingBottom() {
+        return basePaddingBottom;
+    }
+
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
+        paddingLeft = left;
+        paddingTop = top;
+        paddingRight = right;
+        paddingBottom = bottom;
         super.setPadding((int) basePaddingLeft + left, (int) basePaddingTop + top, (int) basePaddingRight + right, (int) basePaddingBottom + bottom);
     }
 
@@ -105,7 +136,7 @@ public class FullwidthEditText extends EditText {
             }
             canvas.drawText(text, 0, text.length(), getScrollX() + getWidth(), charCountTextHeight, charCountTextPaint);
 
-            setPadding(0, 0, (int) inlineCountTextOffset, 0);
+            super.setPadding((int) (basePaddingLeft + paddingLeft), (int) (basePaddingTop + paddingTop), (int) (basePaddingRight + paddingRight + inlineCountTextOffset), (int) (basePaddingBottom + paddingBottom));
         }
     }
 
