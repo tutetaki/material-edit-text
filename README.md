@@ -20,20 +20,10 @@ Usage
 Download
 --------
 
-Download the [latest JAR]() or grab via Maven:
-
-```xml
-<dependency>
-  <groupId>fr.erictruong</groupId>
-  <artifactId>materialedittext</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
-
-or Gradle:
+Download the [latest JAR]() or grab via Gradle:
 
 ```groovy
-compile 'fr.erictruong:materialedittext:1.0.0'
+compile 'fr.erictruong:materialedittext:0.1.0'
 ```
 
 License
