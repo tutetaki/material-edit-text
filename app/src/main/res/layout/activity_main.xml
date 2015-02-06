@@ -24,7 +24,7 @@
                 android:text="API"/>
 
             <EditText
-                android:id="@+id/edt_api"
+                android:id="@+id/main_edt_api"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -47,58 +47,13 @@
                 android:text="Normal with hint text"/>
 
             <MaterialEditText
-                android:id="@+id/medt_normal_with_hint_text"
+                android:id="@+id/main_edt_normal_with_hint_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Hint text"
                 android:inputType="textNoSuggestions"
                 android:singleLine="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/press"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_weight="2"
-                android:text="Press"/>
-
-            <MaterialEditText
-                android:id="@+id/medt_press"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:hint="Hint text"
-                android:inputType="textNoSuggestions"
-                android:singleLine="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/focus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_weight="2"
-                android:text="Focus"/>
-
-            <MaterialEditText
-                android:id="@+id/medt_focus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:hint="Hint text"
-                android:inputType="textNoSuggestions"
-                android:singleLine="true"
-                android:text="Input tex"/>
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +69,7 @@
                 android:text="Normal with input text"/>
 
             <MaterialEditText
-                android:id="@+id/medt_normal_with_input_text"
+                android:id="@+id/main_edt_normal_with_input_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -137,7 +92,7 @@
                 android:text="Error"/>
 
             <MaterialEditText
-                android:id="@+id/medt_error"
+                android:id="@+id/main_edt_error"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -160,7 +115,7 @@
                 android:text="Disabled"/>
 
             <MaterialEditText
-                android:id="@+id/medt_disabled"
+                android:id="@+id/main_edt_disabled"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -198,51 +153,13 @@
                     android:src="@drawable/communication_ic_phone"/>
 
                 <MaterialEditText
-                    android:id="@+id/medt_normal_with_hint_text_icon"
+                    android:id="@+id/main_edt_normal_with_hint_text_icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone"
                     android:inputType="textNoSuggestions"
                     android:singleLine="true"
                     material:withIcon="@+id/img_1"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/focus_icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_weight="2"
-                android:text="Focus"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/img_2"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/communication_ic_phone"/>
-
-                <MaterialEditText
-                    android:id="@+id/medt_focus_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone"
-                    android:inputType="textNoSuggestions"
-                    android:singleLine="true"
-                    android:text="650"
-                    material:withIcon="@+id/img_2"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -266,21 +183,21 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:id="@+id/img_3"
+                    android:id="@+id/img_2"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginRight="16dp"
                     android:src="@drawable/communication_ic_phone"/>
 
                 <MaterialEditText
-                    android:id="@+id/medt_normal_with_input_text_icon"
+                    android:id="@+id/main_edt_normal_with_input_text_icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone"
                     android:inputType="textNoSuggestions"
                     android:singleLine="true"
                     android:text="650-555-1234"
-                    material:withIcon="@+id/img_3"/>
+                    material:withIcon="@+id/img_2"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -297,37 +214,13 @@
                 android:text="Normal with hint text/label"/>
 
             <MaterialEditText
-                android:id="@+id/medt_normal_with_hint_text_label"
+                android:id="@+id/main_edt_normal_with_hint_text_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="Label text"
                 android:inputType="textNoSuggestions"
                 android:singleLine="true"
-                material:floatingLabel="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/focus_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_weight="2"
-                android:text="Focus"/>
-
-            <MaterialEditText
-                android:id="@+id/medt_focus_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:hint="Label text"
-                android:inputType="textNoSuggestions"
-                android:singleLine="true"
-                android:text="Input tex"
                 material:floatingLabel="true"/>
         </LinearLayout>
 
@@ -344,7 +237,7 @@
                 android:text="Normal with input text/label"/>
 
             <MaterialEditText
-                android:id="@+id/medt_normal_with_input_text_label"
+                android:id="@+id/main_edt_normal_with_input_text_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -368,7 +261,7 @@
                 android:text="Disabled"/>
 
             <MaterialEditText
-                android:id="@+id/medt_disabled_label"
+                android:id="@+id/main_edt_disabled_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -377,51 +270,6 @@
                 android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:text="Input text"
-                material:floatingLabel="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/normal_with_hint_text_multi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_weight="2"
-                android:text="Normal with hint text"/>
-
-            <MaterialEditText
-                android:id="@+id/medt_normal_with_hint_text_multi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:hint="Hint text"
-                android:inputType="textNoSuggestions"
-                material:floatingLabel="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/focus_multi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_weight="2"
-                android:text="Focus"/>
-
-            <MaterialEditText
-                android:id="@+id/medt_focus_multi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:hint="Hint text"
-                android:inputType="textNoSuggestions"
-                android:text="Input tex"
                 material:floatingLabel="true"/>
         </LinearLayout>
 
@@ -435,10 +283,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_weight="2"
-                android:text="Normal with multi-line input text/label"/>
+                android:text="Normal with multi-line input text"/>
 
             <MaterialEditText
-                android:id="@+id/medt_normal_with_input_text_multi"
+                android:id="@+id/main_edt_normal_with_input_text_multi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -460,7 +308,7 @@
                 android:text="Normal with multi-line input text/label"/>
 
             <MaterialEditText
-                android:id="@+id/medt_normal_with_input_text_label_multi"
+                android:id="@+id/main_edt_normal_with_input_text_label_multi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -483,7 +331,7 @@
                 android:text="Single Line Focus"/>
 
             <MaterialEditText
-                android:id="@+id/medt_character_counter"
+                android:id="@+id/main_edt_character_counter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -508,7 +356,7 @@
                 android:text="Single Line Focus with Exceeding Max Characters"/>
 
             <MaterialEditText
-                android:id="@+id/medt_character_counter_exceeding"
+                android:id="@+id/main_edt_character_counter_exceeding"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -533,7 +381,7 @@
                 android:text="Multi-Line Focus"/>
 
             <MaterialEditText
-                android:id="@+id/medt_character_counter_multi"
+                android:id="@+id/main_edt_character_counter_multi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -557,7 +405,7 @@
                 android:text="Multi-Line Focus with Exceeding Max Characters"/>
 
             <MaterialEditText
-                android:id="@+id/medt_character_counter_exceeding_multi"
+                android:id="@+id/main_edt_character_counter_exceeding_multi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"

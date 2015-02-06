@@ -32,78 +32,66 @@ public class DemoTest extends ActivityInstrumentationTestCase2<MainActivity> {
     }
 
     private void performDemo(Activity activity) throws InterruptedException {
-        onView(withId(R.id.edt_api)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_api)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_normal_with_hint_text)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_normal_with_hint_text)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_press)).perform(scrollTo(), click());
-
-        onView(withId(R.id.medt_focus)).perform(scrollTo(), click());
-        final EditText medtFocus = (EditText) activity.findViewById(R.id.medt_focus);
+        onView(withId(R.id.main_edt_normal_with_input_text)).perform(scrollTo(), click());
+        final EditText edtNormalWithInputText = (EditText) activity.findViewById(R.id.main_edt_normal_with_input_text);
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                medtFocus.setSelection(medtFocus.length());
+                edtNormalWithInputText.setSelection(edtNormalWithInputText.length());
             }
         });
-        while (!TextUtils.isEmpty(medtFocus.getText())) {
-            onView(withId(R.id.medt_focus)).perform(pressKey(KeyEvent.KEYCODE_DEL));
+        while (!TextUtils.isEmpty(edtNormalWithInputText.getText())) {
+            onView(withId(R.id.main_edt_normal_with_input_text)).perform(pressKey(KeyEvent.KEYCODE_DEL));
         }
 
-        onView(withId(R.id.medt_normal_with_input_text)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_error)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_error)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_disabled)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_disabled)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_normal_with_hint_text_icon)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_normal_with_hint_text_icon)).perform(scrollTo(), click());
-
-        onView(withId(R.id.medt_focus_icon)).perform(scrollTo(), click());
-        final EditText medtFocusIcon = (EditText) activity.findViewById(R.id.medt_focus_icon);
+        onView(withId(R.id.main_edt_normal_with_input_text_icon)).perform(scrollTo(), click());
+        final EditText edtNormalWithInputTextIcon = (EditText) activity.findViewById(R.id.main_edt_normal_with_input_text_icon);
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                medtFocusIcon.setSelection(medtFocusIcon.length());
+                edtNormalWithInputTextIcon.setSelection(edtNormalWithInputTextIcon.length());
             }
         });
-        while (!TextUtils.isEmpty(medtFocusIcon.getText())) {
-            onView(withId(R.id.medt_focus_icon)).perform(pressKey(KeyEvent.KEYCODE_DEL));
+        while (!TextUtils.isEmpty(edtNormalWithInputTextIcon.getText())) {
+            onView(withId(R.id.main_edt_normal_with_input_text_icon)).perform(pressKey(KeyEvent.KEYCODE_DEL));
         }
 
-        onView(withId(R.id.medt_normal_with_input_text_icon)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_normal_with_hint_text_label)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_normal_with_hint_text_label)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_normal_with_input_text_label)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_focus_label)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_disabled_label)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_normal_with_input_text_label)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_normal_with_input_text_multi)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_disabled_label)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_normal_with_input_text_label_multi)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_normal_with_hint_text_multi)).perform(scrollTo(), click());
-
-        onView(withId(R.id.medt_focus_multi)).perform(scrollTo(), click());
-
-        onView(withId(R.id.medt_normal_with_input_text_multi)).perform(scrollTo(), click());
-
-        onView(withId(R.id.medt_normal_with_input_text_label_multi)).perform(scrollTo(), click());
-
-        onView(withId(R.id.medt_character_counter)).perform(scrollTo(), swipeRight());
-        final EditText medtCharacterCounter = (EditText) activity.findViewById(R.id.medt_character_counter);
+        onView(withId(R.id.main_edt_character_counter)).perform(scrollTo(), swipeRight());
+        final EditText edtCharacterCounter = (EditText) activity.findViewById(R.id.main_edt_character_counter);
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                medtCharacterCounter.setSelection(medtCharacterCounter.length());
+                edtCharacterCounter.setSelection(edtCharacterCounter.length());
             }
         });
         String stringToBeTyped = "I am a loooooong text";
-        onView(withId(R.id.medt_character_counter)).perform(typeTextIntoFocusedView(stringToBeTyped));
+        onView(withId(R.id.main_edt_character_counter)).perform(typeTextIntoFocusedView(stringToBeTyped));
         for (int i = 0; i < stringToBeTyped.length(); i++) {
-            onView(withId(R.id.medt_character_counter)).perform(pressKey(KeyEvent.KEYCODE_DEL));
+            onView(withId(R.id.main_edt_character_counter)).perform(pressKey(KeyEvent.KEYCODE_DEL));
             Thread.sleep(50);
         }
 
-        onView(withId(R.id.medt_character_counter_exceeding)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_character_counter_exceeding)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_character_counter_multi)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_character_counter_multi)).perform(scrollTo(), click());
 
-        onView(withId(R.id.medt_character_counter_exceeding_multi)).perform(scrollTo(), click());
+        onView(withId(R.id.main_edt_character_counter_exceeding_multi)).perform(scrollTo(), click());
     }
 }

@@ -113,7 +113,12 @@ public class MaterialEditText extends EditText {
                 if (getText().length() > 0) {
                     labelX = getScrollX();
                     labelY = dimen_16dp + dimen_12sp;
-                    labelTextColor = hintColor;
+                    if (isFocused()) {
+                        labelTextColor = highlightColor;
+                    } else {
+                        labelTextColor = hintColor;
+                    }
+
                     labelTextSize = dimen_12sp;
                 }
             }
@@ -381,6 +386,14 @@ public class MaterialEditText extends EditText {
     }
 
     @Override
+    public CharSequence getHint() {
+        if (floatingLabel && isFocused()) {
+            setHintTextColor(Color.TRANSPARENT);
+        }
+        return super.getHint();
+    }
+
+    @Override
     public void setEnabled(boolean enabled) {
         if (enabled) {
             lineEffect = null;
@@ -475,7 +488,6 @@ public class MaterialEditText extends EditText {
         set.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                setHintTextColor(Color.TRANSPARENT);
             }
 
             @Override
