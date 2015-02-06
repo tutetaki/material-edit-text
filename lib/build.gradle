@@ -9,8 +9,6 @@ android {
         applicationId "fr.erictruong.materialedittext.lib"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 1
-        versionName VERSION_NAME
     }
 
     buildTypes {
