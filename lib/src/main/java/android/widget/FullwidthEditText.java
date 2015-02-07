@@ -1,5 +1,6 @@
 package android.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -39,9 +40,11 @@ public class FullwidthEditText extends EditText {
     }
 
     public FullwidthEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context, attrs);
     }
 
+    @SuppressLint("NewApi")
     public FullwidthEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
@@ -58,6 +61,7 @@ public class FullwidthEditText extends EditText {
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.fullwidthEditText, 0, 0);
             maxCharCount = ta.getInteger(R.styleable.fullwidthEditText_maxCharacters, 0);
+            ta.recycle();
         }
 
         charCountTextColor = getCurrentHintTextColor();
@@ -78,7 +82,7 @@ public class FullwidthEditText extends EditText {
         }
         updatePadding();
         setIncludeFontPadding(false); // Remove text top/bottom padding)
-        setBackground(null);  // Remove API background
+        setBackgroundDrawable(null);  // Remove API background
     }
 
     private void updatePadding() {

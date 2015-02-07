@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -72,9 +73,11 @@ public class MaterialEditText extends EditText {
     }
 
     public MaterialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context, attrs);
     }
 
+    @SuppressLint("NewApi")
     public MaterialEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
@@ -97,9 +100,11 @@ public class MaterialEditText extends EditText {
             floatingLabel = ta.getBoolean(R.styleable.materialEditText_floatingLabel, false);
             maxCharCount = ta.getInteger(R.styleable.materialEditText_maxCharacters, 0);
             iconResId = ta.getResourceId(R.styleable.materialEditText_withIcon, 0);
+            ta.recycle();
         }
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onGlobalLayout() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -153,7 +158,7 @@ public class MaterialEditText extends EditText {
         }
         updatePadding();
         setIncludeFontPadding(false); // Remove text top/bottom padding)
-        setBackground(null);  // Remove API background
+        setBackgroundDrawable(null);  // Remove API background
     }
 
     private void updatePadding() {

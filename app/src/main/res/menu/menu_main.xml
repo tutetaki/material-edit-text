@@ -6,7 +6,7 @@
     <item android:id="@+id/action_switch_theme"
         android:title="@string/menu_switch_theme"
         android:icon="@drawable/communication_ic_invert_colors_on"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_settings"
         android:title="@string/menu_settings"

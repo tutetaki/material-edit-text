@@ -20,6 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="API"/>
 
@@ -43,6 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with hint text"/>
 
@@ -65,6 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with input text"/>
 
@@ -88,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Error"/>
 
@@ -111,6 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Disabled"/>
 
@@ -136,6 +141,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with hint text"/>
 
@@ -150,7 +156,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginRight="16dp"
-                    android:src="@drawable/communication_ic_phone"/>
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/communication_ic_phone"
+                    tools:ignore="ContentDescription"/>
 
                 <MaterialEditText
                     android:id="@+id/main_edt_normal_with_hint_text_icon"
@@ -173,6 +181,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with input text"/>
 
@@ -187,7 +196,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginRight="16dp"
-                    android:src="@drawable/communication_ic_phone"/>
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/communication_ic_phone"
+                    tools:ignore="ContentDescription"/>
 
                 <MaterialEditText
                     android:id="@+id/main_edt_normal_with_input_text_icon"
@@ -210,6 +221,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with hint text/label"/>
 
@@ -233,6 +245,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with input text/label"/>
 
@@ -257,6 +270,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Disabled"/>
 
@@ -282,6 +296,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with multi-line input text"/>
 
@@ -304,6 +319,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Normal with multi-line input text/label"/>
 
@@ -327,6 +343,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Single Line Focus"/>
 
@@ -352,6 +369,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Single Line Focus with Exceeding Max Characters"/>
 
@@ -377,6 +395,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Multi-Line Focus"/>
 
@@ -401,6 +420,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 android:text="Multi-Line Focus with Exceeding Max Characters"/>
 
