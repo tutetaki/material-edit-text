@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import fr.erictruong.materialedittext.lib.R;
+
+import java.lang.reflect.Field;
 
 public class FullwidthEditText extends EditText {
 
@@ -175,5 +178,40 @@ public class FullwidthEditText extends EditText {
                 charCountTextColor = hintColor;
             }
         }
+    }
+
+    @SuppressLint("NewApi")
+    public int getMaxLines() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return super.getMaxLines();
+        } else {
+            Field mMaxModeField = null;
+            Field mMaximumField = null;
+            try {
+                mMaxModeField = this.getClass().getDeclaredField("mMaxMode");
+                mMaximumField = this.getClass().getDeclaredField("mMaximum");
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+
+            if (mMaxModeField != null && mMaximumField != null) {
+                mMaxModeField.setAccessible(true);
+                mMaximumField.setAccessible(true);
+
+                try {
+                    final int mMaxMode = mMaxModeField.getInt(this); // Maximum mode value
+                    final int mMaximum = mMaximumField.getInt(this); // Maximum value
+
+                    if (mMaxMode == 1) { // LINES is 1
+                        return mMaximum;
+                    }
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return -1;
     }
 }

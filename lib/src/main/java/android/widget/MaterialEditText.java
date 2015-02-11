@@ -156,13 +156,13 @@ public class MaterialEditText extends EditText {
             basePaddingTop += dimen_8dp + dimen_12sp;
             labelTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         }
-        updatePadding();
+        updatePadding(0, 0, 0, 0);
         setIncludeFontPadding(false); // Remove text top/bottom padding)
         setBackgroundDrawable(null);  // Remove API background
     }
 
-    private void updatePadding() {
-        super.setPadding((int) (basePaddingLeft + paddingLeft), (int) (basePaddingTop + paddingTop), (int) (basePaddingRight + paddingRight), (int) (basePaddingBottom + paddingBottom));
+    private void updatePadding(int left, int top, int right, int bottom) {
+        super.setPadding((int) (basePaddingLeft + paddingLeft) + left, (int) (basePaddingTop + paddingTop) + top, (int) (basePaddingRight + paddingRight) + right, (int) (basePaddingBottom + paddingBottom) + bottom);
     }
 
     public void setBasePadding(int left, int top, int right, int bottom) {
@@ -375,14 +375,21 @@ public class MaterialEditText extends EditText {
     @Override
     public void setError(CharSequence error) {
         errorText = error;
-        if (TextUtils.isEmpty(error)) {
-            basePaddingBottom -= dimen_8dp + dimen_12sp;
+        if (error == null) {
+            setError(null, null);
+            updatePadding(0, 0, 0, 0);
+            if (isFocused()) {
+                highlightColor = materialEditTextColor;
+                labelTextColor = materialEditTextColor;
+            } else {
+                highlightColor = hintColor;
+                labelTextColor = hintColor;
+            }
         } else {
-            basePaddingBottom += dimen_8dp + dimen_12sp;
+            updatePadding(0, 0, 0, (int) (dimen_8dp + dimen_12sp));
             highlightColor = getContext().getResources().getColor(R.color.material_red);
             labelTextColor = getContext().getResources().getColor(R.color.material_red);
         }
-        updatePadding();
     }
 
     @Override
