@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_medium">
+
+        <TextView
+            android:id="@+id/tv_headline"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Fugit audiam has et"/>
+
+        <Space
+            android:id="@+id/space_headline_body"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_medium"/>
+
+        <TextView
+            android:id="@+id/tv_body"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Lorem ipsum dolor sit amet, mei an detraxit moderatius. Eos ex modo utroque, an mei eros aliquam. Eu pro volutpat vulputate conceptam, suas eirmod eleifend ei his, modo argumentum vis ne. Cu falli platonem conclusionemque per, pro debet ornatus adipiscing ad. Te etiam definitionem est."/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

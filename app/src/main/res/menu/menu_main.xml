@@ -8,7 +8,8 @@
         android:icon="@drawable/communication_ic_invert_colors_on"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/menu_settings"
-        app:showAsAction="never"/>
+    <item android:id="@+id/action_about"
+        android:title="@string/menu_about"
+        android:icon="@drawable/action_ic_info_outline"
+        app:showAsAction="ifRoom"/>
 </menu>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="material_divider">#31000000</color>
+    <color name="material_divider_inverse">#31ffffff</color>
+
     <color name="material_light_blue">@color/material_light_blue_500</color>
     <color name="material_light_blue_500">#03a9f4</color>
     <color name="material_light_blue_700">#0288d1</color>

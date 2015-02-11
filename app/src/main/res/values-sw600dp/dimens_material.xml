@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Card -->
+    <dimen name="card_max_width_material">800dp</dimen>
+
+</resources>

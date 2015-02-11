@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_purple"
+    tools:context=".AboutActivity">
+
+    <MaterialEditText
+        android:id="@+id/about_edt_app_name"
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="@dimen/keyline_1"
+        android:layout_marginStart="@dimen/keyline_1"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:editable="false"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"/>
+
+    <LinearLayout
+        android:id="@+id/about_lin_aaa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_below="@+id/about_edt_app_name"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/divider_horizontal_inverse"/>
+
+        <FullwidthEditText
+            android:id="@+id/about_edt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/keyline_1"
+            android:layout_marginStart="@dimen/keyline_1"
+            android:gravity="center"
+            android:text="@string/about_txt_description"/>
+
+        <include layout="@layout/divider_horizontal_inverse"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/about_lin_btn_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_below="@+id/about_lin_aaa"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/about_btn_github"
+            style="@style/ButtonFlat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_txt_github"/>
+
+        <Button
+            android:id="@+id/about_btn_licenses"
+            style="@style/ButtonFlat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_txt_licenses"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/about_tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_medium"/>
+</RelativeLayout>

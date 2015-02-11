@@ -5,4 +5,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="ButtonFlat" parent="android:Widget.Holo.Button.Borderless">
+        <item name="android:minWidth">88dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
+    </style>
+
 </resources>

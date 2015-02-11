@@ -12,12 +12,9 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    @InjectView(R.id.main_edt_error)
-    MaterialEditText medtError;
-    @InjectView(R.id.img_1)
-    ImageView img1;
-    @InjectView(R.id.img_2)
-    ImageView img2;
+    @InjectView(R.id.main_edt_error) MaterialEditText medtError;
+    @InjectView(R.id.img_1) ImageView img1;
+    @InjectView(R.id.img_2) ImageView img2;
 
     private int theme;
 
@@ -66,8 +63,8 @@ public class MainActivity extends ActionBarActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_settings) {
-
+        } else if (id == R.id.action_about) {
+            startActivity(new Intent(this, AboutActivity.class));
             return true;
         }
 
