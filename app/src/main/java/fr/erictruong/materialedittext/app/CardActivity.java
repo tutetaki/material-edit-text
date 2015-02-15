@@ -14,10 +14,15 @@ public class CardActivity extends RecyclerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int width;
         Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            width = size.x;
+        } else {
+            width = display.getWidth();
+        }
 
         int maxWdth = getResources().getDimensionPixelSize(R.dimen.card_max_width_material);
         if (width > maxWdth) {
