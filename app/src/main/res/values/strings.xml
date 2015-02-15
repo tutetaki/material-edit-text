@@ -5,6 +5,7 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="menu_about">About</string>
+    <string name="menu_developer_mode">Developer Mode</string>
     <string name="menu_switch_theme">Switch theme</string>
 
     <string name="title_activity_about">About</string>

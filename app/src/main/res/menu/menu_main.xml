@@ -5,11 +5,16 @@
 
     <item android:id="@+id/action_switch_theme"
         android:title="@string/menu_switch_theme"
-        android:icon="@drawable/communication_ic_invert_colors_on"
+        android:icon="@drawable/ic_communication_invert_colors_on"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_developer_mode"
+        android:title="@string/menu_developer_mode"
+        android:icon="@drawable/ic_device_developer_mode"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_about"
         android:title="@string/menu_about"
-        android:icon="@drawable/action_ic_info_outline"
+        android:icon="@drawable/ic_action_info_outline"
         app:showAsAction="ifRoom"/>
 </menu>

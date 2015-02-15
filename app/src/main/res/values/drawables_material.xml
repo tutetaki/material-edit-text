@@ -4,9 +4,11 @@
 
 <resources>
 
-    <drawable name="action_ic_info_outline">@drawable/ic_info_outline_white_24dp</drawable>
+    <drawable name="ic_action_info_outline">@drawable/ic_info_outline_white_24dp</drawable>
 
-    <drawable name="communication_ic_invert_colors_on">@drawable/ic_invert_colors_white_24dp</drawable>
-    <drawable name="communication_ic_phone">@drawable/ic_phone_white_24dp</drawable>
+    <drawable name="ic_communication_invert_colors_on">@drawable/ic_invert_colors_white_24dp</drawable>
+    <drawable name="ic_communication_phone">@drawable/ic_phone_white_24dp</drawable>
+
+    <drawable name="ic_device_developer_mode">@drawable/ic_developer_mode_white_24dp</drawable>
 
 </resources>
