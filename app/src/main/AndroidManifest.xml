@@ -20,6 +20,10 @@
             android:label="@string/title_activity_about"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".DeveloperModeActivity"
+            android:label="@string/title_activity_developer_mode"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".LicensesActivity"
             android:label="@string/title_activity_licenses"
             android:parentActivityName=".MainActivity"

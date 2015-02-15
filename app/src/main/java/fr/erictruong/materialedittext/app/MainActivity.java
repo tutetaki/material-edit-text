@@ -10,29 +10,19 @@ import android.widget.MaterialEditText;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
     @InjectView(R.id.main_edt_error) MaterialEditText medtError;
     @InjectView(R.id.img_1) ImageView img1;
     @InjectView(R.id.img_2) ImageView img2;
 
-    private int theme;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        theme = getIntent().getIntExtra("theme", -1);
-
-        if (theme == 1) {
-            setTheme(R.style.AppTheme_Light_DarkActionBar);
-        } else {
-            setTheme(R.style.AppTheme);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        if (theme == 1) {
+        if (isThemeLight()) {
             img1.setImageResource(R.drawable.ic_phone_grey600_24dp);
             img2.setImageResource(R.drawable.ic_phone_grey600_24dp);
         } else {
@@ -47,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -55,13 +46,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_switch_theme) {
-            finish();
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("theme", theme == 1 ? 0 : 1);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+        if (id == R.id.action_developer_mode) {
+            startActivity(new Intent(this, DeveloperModeActivity.class));
             return true;
         } else if (id == R.id.action_about) {
             startActivity(new Intent(this, AboutActivity.class));
