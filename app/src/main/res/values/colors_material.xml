@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="material_text">#de000000</color>
+    <color name="material_text_secondary">#8a000000</color>
+    <color name="material_text_disabled">#44000000</color>
+    <color name="material_text_hint">#42000000</color>
     <color name="material_divider">#31000000</color>
+
     <color name="material_divider_inverse">#31ffffff</color>
 
     <color name="material_light_blue">@color/material_light_blue_500</color>

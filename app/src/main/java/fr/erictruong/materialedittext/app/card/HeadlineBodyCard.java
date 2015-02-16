@@ -39,7 +39,7 @@ public class HeadlineBodyCard extends Card {
 
         @InjectView(R.id.tv_headline) TextView tvHeadline;
         @InjectView(R.id.tv_body) TextView tvBody1;
-        @InjectView(R.id.space_headline_body) Space spaceHeadlineBody1;
+        @InjectView(R.id.space_headline_body) View spaceHeadlineBody1;
 
         public ViewHolder(View v) {
             super(v);

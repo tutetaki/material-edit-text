@@ -26,8 +26,7 @@
         <activity
             android:name=".LicensesActivity"
             android:label="@string/title_activity_licenses"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.Light.DarkActionBar"/>
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
