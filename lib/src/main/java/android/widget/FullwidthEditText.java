@@ -2,13 +2,11 @@ package android.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
 import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import fr.erictruong.materialedittext.lib.R;
 
@@ -16,20 +14,30 @@ import java.lang.reflect.Field;
 
 public class FullwidthEditText extends EditText {
 
-    private float dimen_8dp, dimen_20dp;
-    private float dimen_12sp;
+    private final float DIMEN_8_DP  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());
+    private final float DIMEN_20_DP = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+    private final float DIMEN_12_SP = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
 
-    private float basePaddingLeft, basePaddingTop, basePaddingRight, basePaddingBottom;
-    private float paddingLeft, paddingTop, paddingRight, paddingBottom;
+    private final int COLOR_MATERIAL_RED_500 = 0xfff44336;
+    private final int COLOR_HINT;
 
-    private int hintColor;
+    // Paddings
+    private float basePaddingLeft;
+    private float basePaddingTop;
+    private float basePaddingRight;
+    private float basePaddingBottom;
+    private float paddingLeft;
+    private float paddingTop;
+    private float paddingRight;
+    private float paddingBottom;
 
+    private int errorColor;
+
+    private int maxCharacters;
     private int charCount;
-    private int maxCharCount;
-    private boolean drawCharCounter;
     private float charCountTextHeight;
-    private int charCountTextColor;
     private TextPaint charCountTextPaint;
+    private int charCountTextColor;
 
     private float inlineCountTextOffset;
 
@@ -39,53 +47,59 @@ public class FullwidthEditText extends EditText {
 
     public FullwidthEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+        COLOR_HINT = getCurrentHintTextColor();
         init(context, attrs);
     }
 
     public FullwidthEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        COLOR_HINT = getCurrentHintTextColor();
         init(context, attrs);
     }
 
     @SuppressLint("NewApi")
     public FullwidthEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        COLOR_HINT = getCurrentHintTextColor();
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        Resources r = getResources();
-        DisplayMetrics displayMetrics = r.getDisplayMetrics();
-        dimen_8dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, displayMetrics);
-        dimen_20dp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, displayMetrics);
-        dimen_12sp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, displayMetrics);
+        // Override API padding
+        basePaddingLeft = 0;
+        basePaddingTop = DIMEN_20_DP;
+        basePaddingRight = 0;
+        basePaddingBottom = DIMEN_20_DP;
+
+        // Remove text top/bottom padding)
+        setIncludeFontPadding(false);
+
+        // Remove API background
+        setBackgroundDrawable(null);
 
         // 0btain XML attributes
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.fullwidthEditText, 0, 0);
-            maxCharCount = ta.getInteger(R.styleable.fullwidthEditText_maxCharacters, 0);
+            errorColor = ta.getColor(R.styleable.fullwidthEditText_errorColor, COLOR_MATERIAL_RED_500);
+            maxCharacters = ta.getInteger(R.styleable.fullwidthEditText_maxCharacters, 0);
             ta.recycle();
         }
 
-        charCountTextColor = getCurrentHintTextColor();
-        if (!isEnabled()) {
-            hintColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
-        } else {
-            hintColor = getCurrentHintTextColor();
+        charCountTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        charCountTextPaint.setTextSize(DIMEN_12_SP);
+        charCountTextPaint.setTextAlign(Paint.Align.RIGHT);
+
+//        charCountTextColor = getCurrentHintTextColor();
+//        if (!isEnabled()) {
+//            hintColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
+//        } else {
+//            hintColor = getCurrentHintTextColor();
+//        }
+        if (maxCharacters > 0 && getMaxLines() > 1) {
+            basePaddingBottom += DIMEN_8_DP + DIMEN_12_SP;
         }
 
-        // Override API padding
-        basePaddingTop = dimen_20dp;
-        basePaddingBottom = dimen_20dp;
-        if (maxCharCount > 0) {
-            if (getMaxLines() > 1) {
-                basePaddingBottom += dimen_8dp + dimen_12sp;
-            }
-            charCountTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        }
         updatePadding();
-        setIncludeFontPadding(false); // Remove text top/bottom padding)
-        setBackgroundDrawable(null);  // Remove API background
     }
 
     private void updatePadding() {
@@ -129,55 +143,33 @@ public class FullwidthEditText extends EditText {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (maxCharCount > 0 && drawCharCounter) {
-            charCountTextPaint.setColor(charCountTextColor);
-            charCountTextPaint.setTextSize(dimen_12sp);
-            charCountTextPaint.setTextAlign(Paint.Align.RIGHT);
-            String text = charCount + " / " + maxCharCount;
-            if (getMaxLines() > 1) {
-                charCountTextHeight = getHeight() - dimen_8dp;
-                inlineCountTextOffset = 0;
-            } else {
-                charCountTextHeight = getBaseline();
-                inlineCountTextOffset = charCountTextPaint.measureText(text) + dimen_8dp;
+        charCountTextColor = COLOR_HINT;
+
+        if (maxCharacters > 0 /*&& drawCharCounter*/) {
+            if (charCount > maxCharacters) {
+                charCountTextColor = errorColor;
             }
-            canvas.drawText(text, 0, text.length(), getScrollX() + getWidth(), charCountTextHeight, charCountTextPaint);
+
+            if (charCount > maxCharacters || isFocused()) {
+                charCountTextPaint.setColor(charCountTextColor);
+                String text = charCount + " / " + maxCharacters;
+                if (getMaxLines() > 1) {
+                    charCountTextHeight = getHeight() - DIMEN_8_DP;
+                    inlineCountTextOffset = 0;
+                } else {
+                    charCountTextHeight = getBaseline();
+                    inlineCountTextOffset = charCountTextPaint.measureText(text) + DIMEN_8_DP;
+                }
+                canvas.drawText(text, 0, text.length(), getScrollX() + getWidth(), charCountTextHeight, charCountTextPaint);
+            }
 
             super.setPadding((int) (basePaddingLeft + paddingLeft), (int) (basePaddingTop + paddingTop), (int) (basePaddingRight + paddingRight + inlineCountTextOffset), (int) (basePaddingBottom + paddingBottom));
         }
     }
 
     @Override
-    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        if (isEnabled()) {
-            if (focused) {
-                if (maxCharCount > 0) {
-                    drawCharCounter = true;
-                    if (charCount > maxCharCount) {
-                        charCountTextColor = getContext().getResources().getColor(R.color.material_red);
-                    } else {
-                        charCountTextColor = hintColor;
-                    }
-                }
-            } else {
-                if (maxCharCount > 0) {
-                    drawCharCounter = false;
-                }
-            }
-        }
-        super.onFocusChanged(focused, direction, previouslyFocusedRect);
-    }
-
-    @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         charCount = text.length();
-        if (maxCharCount > 0) {
-            if (charCount > maxCharCount) {
-                charCountTextColor = getContext().getResources().getColor(R.color.material_red);
-            } else {
-                charCountTextColor = hintColor;
-            }
-        }
     }
 
     @SuppressLint("NewApi")

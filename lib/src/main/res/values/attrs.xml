@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Max characters count limit. 0 means no max. -->
+    <attr name="errorColor" format="color"/>
     <attr name="maxCharacters" format="integer"/>
 
     <declare-styleable name="materialEditText">
-        <!-- Highlight color of floating label text, underline. -->
-        <attr name="materialEditTextColor" format="color"/>
+        <!-- Highlight color of floating label text and underline. -->
+        <attr name="backgroundColor" format="color"/>
+        <!-- Error color of under line text and underline. -->
+        <attr name="errorColor"/>
         <!-- Enable floating label text. -->
         <attr name="floatingLabel" format="boolean"/>
         <!-- Max characters count limit. 0 means no max. -->
         <attr name="maxCharacters"/>
         <!-- Icon (ImageView) associated to this EditText. -->
         <attr name="withIcon" format="reference"/>
-
-        <attr name="labelTextSize" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="fullwidthEditText">
+        <!-- Error color of under line text and underline. -->
+        <attr name="errorColor"/>
         <!-- Max characters count limit. 0 means no max. -->
         <attr name="maxCharacters"/>
     </declare-styleable>
