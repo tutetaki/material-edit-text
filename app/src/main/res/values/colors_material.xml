@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="background_floating_material_dark">#ff424242</color>
+    <color name="background_floating_material_light">#ffeeeeee</color>
+
     <color name="material_text">#de000000</color>
     <color name="material_text_secondary">#8a000000</color>
     <color name="material_text_disabled">#44000000</color>
@@ -12,6 +15,9 @@
     <color name="material_light_blue">@color/material_light_blue_500</color>
     <color name="material_light_blue_500">#03a9f4</color>
     <color name="material_light_blue_700">#0288d1</color>
+
+    <color name="material_light_red">@color/material_light_red_500</color>
+    <color name="material_light_red_500">#f44336</color>
 
     <color name="material_purple">@color/material_purple_500</color>
     <color name="material_purple_500">#9c27b0</color>

@@ -14,4 +14,14 @@
         <item name="android:paddingRight">@dimen/padding_small</item>
     </style>
 
+    <style name="DividerHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/material_divider</item>
+    </style>
+
+    <style name="DividerHorizontal.Inverse">
+        <item name="android:background">@color/material_divider_inverse</item>
+    </style>
+
 </resources>

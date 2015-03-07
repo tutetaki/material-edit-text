@@ -14,7 +14,6 @@
         android:layout_marginEnd="@dimen/keyline_1"
         android:layout_marginStart="@dimen/keyline_1"
         android:layout_marginTop="@dimen/margin_medium"
-        android:editable="false"
         android:text="@string/app_name"
         android:textColor="@android:color/white"/>
 
