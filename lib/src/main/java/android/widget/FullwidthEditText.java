@@ -89,12 +89,6 @@ public class FullwidthEditText extends EditText {
         charCountTextPaint.setTextSize(DIMEN_12_SP);
         charCountTextPaint.setTextAlign(Paint.Align.RIGHT);
 
-//        charCountTextColor = getCurrentHintTextColor();
-//        if (!isEnabled()) {
-//            hintColor = getTextColors().getColorForState(new int[]{ -android.R.attr.state_enabled }, 0);
-//        } else {
-//            hintColor = getCurrentHintTextColor();
-//        }
         if (maxCharacters > 0 && getMaxLines() > 1) {
             basePaddingBottom += DIMEN_8_DP + DIMEN_12_SP;
         }
@@ -145,7 +139,7 @@ public class FullwidthEditText extends EditText {
 
         charCountTextColor = COLOR_HINT;
 
-        if (maxCharacters > 0 /*&& drawCharCounter*/) {
+        if (maxCharacters > 0) {
             if (charCount > maxCharacters) {
                 charCountTextColor = errorColor;
             }
