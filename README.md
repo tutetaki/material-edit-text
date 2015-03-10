@@ -1,29 +1,30 @@
 Material Design EditText
 ========================
 
-![demo_dark.gif](./img/demo_dark.gif) ![demo_light.gif](./img/demo_light.gif)
+![demo_dark.gif](./img/demo_dark.gif)
 
 Usage
 -----
 
 ```xml
 <MaterialEditText
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:hint="Hint text"
-  android:text="Input text"
-  material:floatingLabel="true"
-  material:maxCharacters="120"
-  material:withIcon="@+id/image_view"/>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="1§dp"
+    android:text="Input text"
+    android:hint="Hint text"
+    app:floatingLabel="true"
+    app:maxCharacters="120"
+    app:withIcon="@+id/image_view"/>
 ```
 
 Download
 --------
 
-Download the [latest JAR]() or grab via Gradle:
+Grab via Gradle:
 
 ```groovy
-compile 'fr.erictruong:materialedittext:0.1.0'
+compile 'fr.erictruong:materialedittext:0.2.0'
 ```
 
 License
