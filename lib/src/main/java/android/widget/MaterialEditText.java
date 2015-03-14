@@ -180,10 +180,15 @@ public class MaterialEditText extends EditText {
 
     private int obtainColorAccent() {
         Context context = getContext();
+        TypedValue typedValue = new TypedValue();
+        if (context.getTheme().resolveAttribute(android.R.attr.colorAccent, typedValue, true)) {
+            int color = typedValue.data;
+            return color;
+        }
+
         int colorAccentId = getResources().getIdentifier("colorAccent", "attr", context.getPackageName());
         if (colorAccentId > 0) {
-            TypedValue typedValue = new TypedValue();
-            TypedArray a = context.getTheme().obtainStyledAttributes(typedValue.data, new int[]{ colorAccentId });
+            TypedArray a = context.getTheme().obtainStyledAttributes(typedValue.data, new int[]{colorAccentId});
             int color = a.getColor(0, 0);
             a.recycle();
             return color;
